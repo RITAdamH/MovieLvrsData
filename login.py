@@ -65,3 +65,5 @@ def create_user(connection, username, password, fname, lname, email):
         if e.diag.constraint_name == "users_email_key":
             return False, "Email"
         return False, "Username"
+    except:
+        return False, None
