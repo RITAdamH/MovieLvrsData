@@ -21,11 +21,11 @@ def main():
 			print('Logging in')
 			username = input('Username: ')
 			password = input('Password: ')
-		if login_user(conn, username, password):
-			print('Login successful')
-			logged_in = True
-		else:
-			print('Incorrect login')
+			if login_user(conn, username, password):
+				print('Login successful')
+				logged_in = True
+			else:
+				print('Incorrect login')
 		elif inp == 'new':
 			print('Creating user')
 			username = input('Username: ')
@@ -33,18 +33,25 @@ def main():
 			first_name = input('First Name: ')
 			last_name = input('Last Name: ')
 			email = input('Email: ')
-		if create_user(conn, username, password, first_name, last_name, email):
-			print('Created successfully')
-			logged_in = True
-		else:
-			print('Error on creation')
+			
+			succ, e_type = create_user(conn, username, password, first_name, last_name, email):
+			if succ:
+				print('Created successfully')
+				logged_in = True
+			if e_type == 'username':
+				print('Username already in use')
+			elif e_type == 'email':
+				print('Email already in use')
+			else:
+				print('Error on creation')
 		else:
 			print('Unrecognized input')
   
 	print('You are now logged in')
 	
 	while True:
-		inp = input('Enter a command ("help" for help)').lower()
+		print('Enter a command ("help" for help)')
+		inp = input('> ').lower()
 		command, *flags = inp.split()
 		if command not in COMMAND_FLAGS:
 			print('Unknown command - see "help"')
@@ -61,7 +68,9 @@ def main():
 		elif command == 'quit':
 			break
 		elif command == 'tool':
-			pass
+			if flags[0] == 'v':
+				pass
+			elif flags[0] == '
 		elif command == 'categ':
 			pass
 		elif command == 'reqs':
