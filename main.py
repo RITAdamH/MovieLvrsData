@@ -11,7 +11,7 @@ COMMAND_FLAGS = {
 
 def main():
 	conn = get_conn()  # TODO
-  
+
 	logged_in = False
 
 	while not logged_in:
@@ -38,9 +38,9 @@ def main():
 			if succ:
 				print('Created successfully')
 				logged_in = True
-			if e_type == 'username':
+			if e_type == 'Username':
 				print('Username already in use')
-			elif e_type == 'email':
+			elif e_type == 'Email':
 				print('Email already in use')
 			else:
 				print('Error on creation')
@@ -70,11 +70,26 @@ def main():
 		elif command == 'tool':
 			if flags[0] == 'v':
 				pass
-			elif flags[0] == '
+			elif flags[0] == 'a':
+				pass
+			elif flags[0] == 'e':
+				pass
+			elif flags[0] == 'd':
+				pass
 		elif command == 'categ':
-			pass
+			if flags[0] == 'v':
+				pass
+			elif flags[0] == 'a':
+				pass
+			elif flags[0] == 'e':
+				pass
+			elif flags[0] == 'd':
+				pass
 		elif command == 'reqs':
-			pass
+			if flags[0] == 'g':
+				pass
+			elif flags[0] == 'r':
+				pass
 		elif command == 'search':
 			pass
   
