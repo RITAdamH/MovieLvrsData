@@ -1,4 +1,4 @@
-from aifc import Error
+
 
 import psycopg2
 from sshtunnel import SSHTunnelForwarder
