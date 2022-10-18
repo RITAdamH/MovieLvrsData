@@ -1,10 +1,6 @@
-
-
 import psycopg2
 from sshtunnel import SSHTunnelForwarder
 
-username = "your username"
-password = "your password"
 dbName = "p32001_17"
 
 
@@ -28,8 +24,7 @@ def read_query(connection, query):
     except:
         print("reading failed")
 
-
-if __name__ == '__main__':
+def get_conn(username, password):
     try:
         with SSHTunnelForwarder(('starbug.cs.rit.edu', 22),
                                 ssh_username=username,
@@ -60,6 +55,6 @@ if __name__ == '__main__':
                 print(result)
             """
 
-            conn.close()
+            return conn
     except:
         print("Connection failed")
