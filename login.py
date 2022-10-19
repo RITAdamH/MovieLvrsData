@@ -20,7 +20,7 @@ log in a user if that user exists
 def login_user(cur: cursor, username: str, password: str) -> bool | None:
     try:
         cur.execute(
-            f" select 1 from users where username = '{username}' and password = '{password}'")
+            f"select 1 from users where username = '{username}' and password = '{password}'")
         if cur.rowcount > 0:
             cur.execute(
                 f"update users set last_access = now() where username = '{username}'")
