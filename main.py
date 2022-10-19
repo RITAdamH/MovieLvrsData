@@ -28,6 +28,7 @@ def main() -> None:
         server.start()
         print("SSH tunnel established")
         params = {
+            'autocommit': True,
             'database': dbName,
             'user': username,
             'password': password,
@@ -36,7 +37,6 @@ def main() -> None:
         }
 
         conn = connect(**params)
-        conn.autocommit = True
         print("Database connection established")
         logged_in = False
 

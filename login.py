@@ -26,7 +26,6 @@ def login_user(conn: connection, username: str, password: str) -> bool | None:
         if cursr.rowcount > 0:
             cursr.execute(
                 f"update users set last_access = now() where username = '{username}'")
-            conn.commit()
             return True
     except:
         return None
@@ -53,7 +52,6 @@ def create_user(conn: connection, username: str, password: str, fname: str, lnam
         cursr.execute(
             f"insert into users(username, password, first_name, last_name, email, creation, last_access)"
             "values ('{username}', '{password}', '{fname}', '{lname}', '{email}', now(), now())")
-        conn.commit()
         return True
     except IntegrityError:
         return False
