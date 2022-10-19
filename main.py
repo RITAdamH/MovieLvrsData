@@ -2,6 +2,7 @@ from psycopg2 import connect
 from sshtunnel import SSHTunnelForwarder
 
 from login import create_user, login_user
+from tools import show_tools
 
 COMMAND_FLAGS = {
     'help': (),
@@ -119,9 +120,10 @@ def main() -> None:
                 if flags[0] == 'v':
                     by = input('Sort by category or name? (c/n): ').lower()
                     if by in ('c', 'n'):
-                        inp = input('Ascending or descending? (a/d): ').lower()
-                        if inp in ('a', 'd'):
-                            pass
+                        ord = input('Ascending or descending? (a/d): ').lower()
+                        if ord in ('a', 'd'):
+                            if not show_tools(conn, username, by, ord):
+                                print('Error showing tools')
                         else:
                             print('Invalid input')
                     else:
