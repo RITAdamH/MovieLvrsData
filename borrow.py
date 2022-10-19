@@ -11,7 +11,6 @@ def borrow(conn, barcode, username, date, duration):
         query = "insert into tools_req values(" + username + ", " + barcode + ", " + date + ", " + duration + ", Pending, " + datetime.now() + ", " + (date+duration)
         sql.execute_query(conn, query)
 
-
 def manage(conn, username, flag):
     if flag == "g":
         query = "select barcode, date_required from tools_req where username = " + username
@@ -23,3 +22,22 @@ def manage(conn, username, flag):
         requests = list(sql.read_query(conn, query))
         for request in requests:
             print(request)
+
+# requester's username
+def accept(conn, username):
+    query = "update tools_req set borrow_status = Accepted, last_status_change = " + datetime.now() + " where username = " + username
+    sql.execute_query(conn, query)
+
+
+def reject(conn, username):
+    query = "update tools_req set borrow_status = Rejected, last_status_change = " + datetime.now() + " where username = " + username
+    sql.execute_query(conn, query)
+
+def return_tool(conn, username):
+    print("stub")
+
+def list_lent(conn, username):
+    print("stub")
+
+def list_borrowed(conn, username):
+    print("stub")
