@@ -60,26 +60,10 @@ def main() -> None:
             elif inp == 'new':
                 print('Creating user')
                 username = input('Username: ')
-                if not username:
-                    print('Username cannot be empty')
-                    continue
                 password = input('Password: ')
-                if not password:
-                    print('Password cannot be empty')
-                    continue
                 first_name = input('First Name: ')
-                if not first_name:
-                    print('First Name cannot be empty')
-                    continue
                 last_name = input('Last Name: ')
-                if not last_name:
-                    print('Last Name cannot be empty')
-                    continue
                 email = input('Email: ')
-                if not email:
-                    print('Email cannot be empty')
-                    continue
-
                 res = create_user(cur, username, password,
                                   first_name, last_name, email)
                 if res is None:
@@ -141,9 +125,6 @@ def main() -> None:
                         print('Error showing categories')
                 elif flags[0] == 'a':
                     name = input('Name of new category: ')
-                    if not name:
-                        print('Name cannot be empty')
-                        continue
                     res = create_categ(cur, username, name)
                     if res is None:
                         print('Error creating category')
@@ -156,9 +137,6 @@ def main() -> None:
                     inp = input('Edit name or tools (n/t): ').lower()
                     if inp == 'n':
                         new_name = input('New name: ')
-                        if not new_name:
-                            print('Name cannot be empty')
-                            continue
                         res = edit_categ_name(
                             cur, username, name, new_name)
                         if res is None:

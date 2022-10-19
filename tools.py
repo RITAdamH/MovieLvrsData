@@ -1,4 +1,14 @@
+from typing import Any
+
 from psycopg2.extensions import cursor
+
+
+def show_tool(tool: tuple[Any]) -> None:
+    print(f'{tool[1]} [{tool[0]}]')
+    print(f'"{tool[2]}"')
+    print(f'Purchased on {tool[3]} (${tool[4]:.2f})')
+    print(f'{"Shareable" if tool[5] else "Not shareable"}')
+    print()
 
 
 def show_tools(cur: cursor, username: str, by: str, ord: str) -> bool:
@@ -14,11 +24,7 @@ def show_tools(cur: cursor, username: str, by: str, ord: str) -> bool:
         print(
             f'Your tools ({"category" if by == "c" else "name"} {"ascending" if ord == "a" else "descending"}):')
         for tool in tools:
-            print(f'{tool[1]} [{tool[0]}]')
-            print(f'"{tool[2]}"')
-            print(f'Purchased on {tool[3]} (${tool[4]:.2f})')
-            print(f'{"Shareable" if tool[5] else "Not shareable"}')
-            print()
+            show_tool(tool)
     except:
         return False
 
