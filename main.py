@@ -1,7 +1,7 @@
 from psycopg2 import connect
 from sshtunnel import SSHTunnelForwarder
 
-from login import login_user, create_user
+from login import create_user, login_user
 
 COMMAND_FLAGS = {
     'help': (),
@@ -117,7 +117,15 @@ def main() -> None:
                 break
             elif command == 'tool':
                 if flags[0] == 'v':
-                    pass
+                    by = input('Sort by category or name? (c/n): ').lower()
+                    if by in ('c', 'n'):
+                        inp = input('Ascending or descending? (a/d): ').lower()
+                        if inp in ('a', 'd'):
+                            pass
+                        else:
+                            print('Invalid input')
+                    else:
+                        print('Invalid input')
                 elif flags[0] == 'a':
                     pass
                 elif flags[0] == 'e':

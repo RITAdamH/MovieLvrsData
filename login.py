@@ -4,8 +4,9 @@ Author: Brett Lubberts
 Description: File containing and functions that query the database to log
 a user in, or create a new user
 """
-from psycopg2.extensions import connection
+
 from psycopg2.errors import UniqueViolation
+from psycopg2.extensions import connection
 
 """
 log in a user if that user exists
@@ -18,16 +19,13 @@ log in a user if that user exists
 
 def login_user(conn: connection, username: str, password: str) -> bool | None:
     cursr = conn.cursor()
-    query = (" select * from users "
-             "where username = '" + username + "' and "
-             "password = '" + password + "'")
 
     try:
-        cursr.execute(query)
+        cursr.execute(
+            f" select 1 from users where username = '{username}' and password = '{password}'")
         if cursr.rowcount > 0:
-            update = ("update users set last_access = now() where username"
-                      " = '" + username + "'")
-            cursr.execute(update)
+            cursr.execute(
+                f"update users set last_access = now() where username = '{username}'")
             conn.commit()
             return True
     except:
@@ -37,7 +35,7 @@ def login_user(conn: connection, username: str, password: str) -> bool | None:
 
 
 """
-create a new user and add them to the database 
+create a new user and add them to the database
 @param conn: the connection to the database
 @param username: the new users username
 @param password: the new users password
@@ -50,13 +48,11 @@ create a new user and add them to the database
 
 def create_user(conn: connection, username: str, password: str, fname: str, lname: str, email: str) -> tuple[bool, str | None]:
     cursr = conn.cursor()
-    query = ("insert into users(username, password, first_name, last_name,"
-             "email, creation, last_access) values ('" + username + "',"
-             " '" + password + "', '" + fname + "', '" + lname + "', "
-             "'" + email + "', now(), now()" + ")")
 
     try:
-        cursr.execute(query)
+        cursr.execute(
+            f"insert into users(username, password, first_name, last_name, email, creation, last_access)"
+            "values ('{username}', '{password}', '{fname}', '{lname}', '{email}', now(), now())")
         conn.commit()
         return True, None
     except UniqueViolation as e:
