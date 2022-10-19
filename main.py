@@ -1,8 +1,7 @@
-# Patrick
-
+from psycopg2 import connect
 from sshtunnel import SSHTunnelForwarder
 
-from login import *
+from login import login_user, create_user
 
 COMMAND_FLAGS = {
     'help': (),
@@ -14,7 +13,7 @@ COMMAND_FLAGS = {
 }
 
 
-def main():
+def main() -> None:
     username = 'prj7465'
     password = 'lintThespian@1'
     dbName = 'p32001_17'
@@ -33,7 +32,7 @@ def main():
             'port': server.local_bind_port,
         }
 
-        conn = psycopg2.connect(**params)
+        conn = connect(**params)
         print("Database connection established")
         logged_in = False
 
@@ -45,7 +44,10 @@ def main():
                 print('Logging in')
                 username = input('Username: ')
                 password = input('Password: ')
-                if login_user(conn, username, password):
+                res = login_user(conn, username, password)
+                if res is None:
+                    print('Error logging in')
+                elif res:
                     print('Login successful')
                     logged_in = True
                 else:
@@ -73,14 +75,14 @@ def main():
                     print('Email cannot be empty')
                     continue
 
-                succ, e_type = create_user(
+                succ, e_constraint = create_user(
                     conn, username, password, first_name, last_name, email)
                 if succ:
                     print('Created successfully')
                     logged_in = True
-                elif e_type == 'Username':
+                elif e_constraint == 'users_pkey':
                     print('Username already in use')
-                elif e_type == 'Email':
+                elif e_constraint == 'users_email_key':
                     print('Email already in use')
                 else:
                     print('Error on creation')

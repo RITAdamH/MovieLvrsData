@@ -4,58 +4,52 @@ Author: Brett Lubberts
 Description: File containing and functions that query the database to log
 a user in, or create a new user
 """
-import psycopg2
+from psycopg2.extensions import connection
+from psycopg2.errors import UniqueViolation
 
 """
 log in a user if that user exists
 @param connection: the connection to the database
 @param username: the users username
 @param password: the users password
-@return true if user exists, false if not
+@return True if logging in was successful, False if user didn't exist, None if error
 """
 
 
-def login_user(connection, username, password):
-    cursr = connection.cursor()
+def login_user(conn: connection, username: str, password: str) -> bool | None:
+    cursr = conn.cursor()
     query = (" select * from users "
              "where username = '" + username + "' and "
              "password = '" + password + "'")
-    result = None
+
     try:
         cursr.execute(query)
-        result = cursr.fetchall()
-
-    except:
-        print("user reading failed")
-    if result:
-        update = ("update users set last_access = now() where username"
-                  " = '" + username + "'")
-
-        try:
+        if cursr.rowcount > 0:
+            update = ("update users set last_access = now() where username"
+                      " = '" + username + "'")
             cursr.execute(update)
-            connection.commit()
-        except:
-            print("user update failed")
+            conn.commit()
+            return True
+    except:
+        return None
 
-        return True
-    else:
-        return False
+    return False
 
 
 """
 create a new user and add them to the database 
-@param connection: the connection to the database
+@param conn: the connection to the database
 @param username: the new users username
 @param password: the new users password
 @param fname: the new users first name
 @param lname: the new users last name
 @param email: the new users email
-@return true if new user created, false otherwise
+@return True if new user was created successfully, False otherwise, and an optional error specifier
 """
 
 
-def create_user(connection, username, password, fname, lname, email):
-    cursr = connection.cursor()
+def create_user(conn: connection, username: str, password: str, fname: str, lname: str, email: str) -> tuple[bool, str | None]:
+    cursr = conn.cursor()
     query = ("insert into users(username, password, first_name, last_name,"
              "email, creation, last_access) values ('" + username + "',"
              " '" + password + "', '" + fname + "', '" + lname + "', "
@@ -63,12 +57,9 @@ def create_user(connection, username, password, fname, lname, email):
 
     try:
         cursr.execute(query)
-        connection.commit()
+        conn.commit()
         return True, None
-    except psycopg2.errors.UniqueViolation as e:
-        if e.diag.constraint_name == "users_email_key":
-            return False, "Email"
-        return False, "Username"
-    except Exception as e:
-        print(e)
+    except UniqueViolation as e:
+        return False, e.diag.constraint_name
+    except:
         return False, None
