@@ -76,9 +76,10 @@ def show_categs(cur: cursor, username: str) -> bool:
             f'Your categories (name ascending):')
         for categ in categs:
             print(categ[1])
+            print('-' * len(categ[1]))
 
             cur.execute(
-                f"select * from tools where barcode in (select barcode from tool_categs where cid = {categ[0]})")
+                f"select * from tools where barcode in (select barcode from tool_categs where cid = {categ[0]}) order by name asc")
 
             tools = cur.fetchall()
 
