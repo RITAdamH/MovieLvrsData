@@ -5,7 +5,7 @@ Description: File containing and functions that query the database to log
 a user in, or create a new user
 """
 
-from psycopg2.errors import UniqueViolation
+from psycopg2.errors import IntegrityError
 from psycopg2.extensions import connection
 
 """
@@ -42,11 +42,11 @@ create a new user and add them to the database
 @param fname: the new users first name
 @param lname: the new users last name
 @param email: the new users email
-@return True if new user was created successfully, False otherwise, and an optional error specifier
+@return None if an error occurred, otherwise whether the new user was created
 """
 
 
-def create_user(conn: connection, username: str, password: str, fname: str, lname: str, email: str) -> tuple[bool, str | None]:
+def create_user(conn: connection, username: str, password: str, fname: str, lname: str, email: str) -> bool | None:
     cursr = conn.cursor()
 
     try:
@@ -54,8 +54,8 @@ def create_user(conn: connection, username: str, password: str, fname: str, lnam
             f"insert into users(username, password, first_name, last_name, email, creation, last_access)"
             "values ('{username}', '{password}', '{fname}', '{lname}', '{email}', now(), now())")
         conn.commit()
-        return True, None
-    except UniqueViolation as e:
-        return False, e.diag.constraint_name
+        return True
+    except IntegrityError:
+        return False
     except:
-        return False, None
+        return None
