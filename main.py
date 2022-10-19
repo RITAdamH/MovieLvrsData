@@ -44,7 +44,7 @@ def main() -> None:
         while not logged_in:
             print('Welcome to MvieLvrs tools application')
             inp = input(
-                'Enter "login" to login, "new" to create an account, or "quit" to quit: ').lower()
+                'Enter "login" to login, "new" to create an account, or "quit" to quit: ').lower().strip()
             if inp == 'login':
                 print('Logging in')
                 username = input('Username: ')
@@ -82,7 +82,7 @@ def main() -> None:
 
         while logged_in:
             print('Enter a command ("help" for help, "quit" to quit)')
-            inp = input('> ').lower()
+            inp = input('> ').lower().strip()
             command, *flags = inp.split()
             if command not in COMMAND_FLAGS:
                 print('Unknown command - see "help"')
@@ -103,9 +103,11 @@ def main() -> None:
                 break
             elif command == 'tool':
                 if flags[0] == 'v':
-                    by = input('Sort by category or name? (c/n): ').lower()
+                    by = input(
+                        'Sort by category or name? (c/n): ').lower().strip()
                     if by in ('c', 'n'):
-                        ord = input('Ascending or descending? (a/d): ').lower()
+                        ord = input(
+                            'Ascending or descending? (a/d): ').lower().strip()
                         if ord in ('a', 'd'):
                             if not show_tools(cur, username, by, ord):
                                 print('Error showing tools')
@@ -134,7 +136,7 @@ def main() -> None:
                         print('Category already exists')
                 elif flags[0] == 'e':
                     name = input('Name of category to edit: ')
-                    inp = input('Edit name or tools (n/t): ').lower()
+                    inp = input('Edit name or tools (n/t): ').lower().strip()
                     if inp == 'n':
                         new_name = input('New name: ')
                         res = edit_categ_name(
@@ -147,7 +149,8 @@ def main() -> None:
                             print(
                                 'Category does not exist or name is already in use')
                     elif inp == 't':
-                        inp = input('Add or remove tool (a/r): ').lower()
+                        inp = input(
+                            'Add or remove tool (a/r): ').lower().strip()
                         if inp == 'a':
                             tool_barcode = input('Tool barcode (must own): ')
                             res = add_categ_tool(
