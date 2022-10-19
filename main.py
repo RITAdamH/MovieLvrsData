@@ -28,7 +28,6 @@ def main() -> None:
         server.start()
         print("SSH tunnel established")
         params = {
-            'autocommit': True,
             'database': dbName,
             'user': username,
             'password': password,
@@ -36,7 +35,9 @@ def main() -> None:
             'port': server.local_bind_port,
         }
 
-        conn = connect(**params)
+        con = connect(**params)
+        con.autocommit = True
+        cur = con.cursor()
         print("Database connection established")
         logged_in = False
 
@@ -48,7 +49,7 @@ def main() -> None:
                 print('Logging in')
                 username = input('Username: ')
                 password = input('Password: ')
-                res = login_user(conn, username, password)
+                res = login_user(cur, username, password)
                 if res is None:
                     print('Error logging in')
                 elif res:
@@ -79,7 +80,7 @@ def main() -> None:
                     print('Email cannot be empty')
                     continue
 
-                res = create_user(conn, username, password,
+                res = create_user(cur, username, password,
                                   first_name, last_name, email)
                 if res is None:
                     print('Error creating user')
@@ -122,7 +123,7 @@ def main() -> None:
                     if by in ('c', 'n'):
                         ord = input('Ascending or descending? (a/d): ').lower()
                         if ord in ('a', 'd'):
-                            if not show_tools(conn, username, by, ord):
+                            if not show_tools(cur, username, by, ord):
                                 print('Error showing tools')
                         else:
                             print('Invalid input')
@@ -136,14 +137,14 @@ def main() -> None:
                     raise NotImplementedError
             elif command == 'categ':
                 if flags[0] == 'v':
-                    if not show_categs(conn, username):
+                    if not show_categs(cur, username):
                         print('Error showing categories')
                 elif flags[0] == 'a':
                     name = input('Name of new category: ')
                     if not name:
                         print('Name cannot be empty')
                         continue
-                    res = create_categ(conn, username, name)
+                    res = create_categ(cur, username, name)
                     if res is None:
                         print('Error creating category')
                     elif res:
@@ -159,19 +160,20 @@ def main() -> None:
                             print('Name cannot be empty')
                             continue
                         res = edit_categ_name(
-                            conn, username, name, new_name)
+                            cur, username, name, new_name)
                         if res is None:
                             print('Error editing category name')
                         elif res:
                             print('Edited name successfully')
                         else:
-                            print('Category does not exist')
+                            print(
+                                'Category does not exist or name is already in use')
                     elif inp == 't':
                         inp = input('Add or remove tool (a/r): ').lower()
                         if inp == 'a':
                             tool_barcode = input('Tool barcode (must own): ')
                             res = add_categ_tool(
-                                conn, username, name, tool_barcode)
+                                cur, username, name, tool_barcode)
                             if res is None:
                                 print('Error adding tool to category')
                             elif res:
@@ -182,7 +184,7 @@ def main() -> None:
                         elif inp == 'r':
                             tool_barcode = input('Tool barcode: ')
                             res = delete_categ_tool(
-                                conn, username, name, tool_barcode)
+                                cur, username, name, tool_barcode)
                             if res is None:
                                 print('Error removing tool from category')
                             elif res:
@@ -195,7 +197,7 @@ def main() -> None:
                         print('Invalid input')
                 elif flags[0] == 'd':
                     name = input('Name of category to delete: ')
-                    res = delete_categ(conn, username, name)
+                    res = delete_categ(cur, username, name)
                     if res is None:
                         print('Error deleting category')
                     elif res:
@@ -212,7 +214,7 @@ def main() -> None:
 
         print('Thanks for trusting Mvie Lovers!')
 
-        conn.close()
+        con.close()
 
 
 if __name__ == '__main__':

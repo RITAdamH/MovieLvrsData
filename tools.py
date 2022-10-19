@@ -1,17 +1,15 @@
-from psycopg2.extensions import connection
+from psycopg2.extensions import cursor
 
 
-def show_tools(conn: connection, username: str, by: str, ord: str) -> bool:
-    cursr = conn.cursor()
-
+def show_tools(cur: cursor, username: str, by: str, ord: str) -> bool:
     try:
         if by == 'n':
-            cursr.execute(
+            cur.execute(
                 f"select * from tools where username = '{username}' order by name {'asc' if ord == 'a' else 'desc'}")
         else:
             raise NotImplementedError  # TODO add sort by category
 
-        tools = cursr.fetchall()
+        tools = cur.fetchall()
 
         print(
             f'Your tools ({"category" if by == "c" else "name"} {"ascending" if ord == "a" else "descending"}):')
