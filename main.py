@@ -1,6 +1,8 @@
 from psycopg2 import connect
 from sshtunnel import SSHTunnelForwarder
 
+from categories import (add_categ_tool, create_categ, delete_categ,
+                        delete_categ_tool, edit_categ_name, show_categs)
 from login import create_user, login_user
 from tools import show_tools
 
@@ -34,6 +36,7 @@ def main() -> None:
         }
 
         conn = connect(**params)
+        conn.autocommit = True
         print("Database connection established")
         logged_in = False
 
@@ -76,17 +79,14 @@ def main() -> None:
                     print('Email cannot be empty')
                     continue
 
-                succ, e_constraint = create_user(
-                    conn, username, password, first_name, last_name, email)
-                if succ:
-                    print('Created successfully')
-                    logged_in = True
-                elif e_constraint == 'users_pkey':
-                    print('Username already in use')
-                elif e_constraint == 'users_email_key':
-                    print('Email already in use')
+                res = create_user(conn, username, password,
+                                  first_name, last_name, email)
+                if res is None:
+                    print('Error creating user')
+                elif res:
+                    print('User created')
                 else:
-                    print('Error on creation')
+                    print('Username or email already exists')
             elif inp == 'quit':
                 break
             else:
@@ -129,29 +129,90 @@ def main() -> None:
                     else:
                         print('Invalid input')
                 elif flags[0] == 'a':
-                    pass
+                    raise NotImplementedError
                 elif flags[0] == 'e':
-                    pass
+                    raise NotImplementedError
                 elif flags[0] == 'd':
-                    pass
+                    raise NotImplementedError
             elif command == 'categ':
                 if flags[0] == 'v':
-                    pass
+                    if not show_categs(conn, username):
+                        print('Error showing categories')
                 elif flags[0] == 'a':
-                    pass
+                    name = input('Name of new category: ')
+                    if not name:
+                        print('Name cannot be empty')
+                        continue
+                    res = create_categ(conn, username, name)
+                    if res is None:
+                        print('Error creating category')
+                    elif res:
+                        print('Created successfully')
+                    else:
+                        print('Category already exists')
                 elif flags[0] == 'e':
-                    pass
+                    name = input('Name of category to edit: ')
+                    inp = input('Edit name or tools (n/t): ').lower()
+                    if inp == 'n':
+                        new_name = input('New name: ')
+                        if not new_name:
+                            print('Name cannot be empty')
+                            continue
+                        res = edit_categ_name(
+                            conn, username, name, new_name)
+                        if res is None:
+                            print('Error editing category name')
+                        elif res:
+                            print('Edited name successfully')
+                        else:
+                            print('Category does not exist')
+                    elif inp == 't':
+                        inp = input('Add or remove tool (a/r): ').lower()
+                        if inp == 'a':
+                            tool_barcode = input('Tool barcode (must own): ')
+                            res = add_categ_tool(
+                                conn, username, name, tool_barcode)
+                            if res is None:
+                                print('Error adding tool to category')
+                            elif res:
+                                print('Added tool to category successfully')
+                            else:
+                                print(
+                                    'Category or tool does not exist or tool is not owned or tool already is in category')
+                        elif inp == 'r':
+                            tool_barcode = input('Tool barcode: ')
+                            res = delete_categ_tool(
+                                conn, username, name, tool_barcode)
+                            if res is None:
+                                print('Error removing tool from category')
+                            elif res:
+                                print('Removed tool from category successfully')
+                            else:
+                                print('Category or tool does not exist')
+                        else:
+                            print('Invalid input')
+                    else:
+                        print('Invalid input')
                 elif flags[0] == 'd':
-                    pass
+                    name = input('Name of category to delete: ')
+                    res = delete_categ(conn, username, name)
+                    if res is None:
+                        print('Error deleting category')
+                    elif res:
+                        print('Deleted successfully')
+                    else:
+                        print('Category does not exist')
             elif command == 'reqs':
                 if flags[0] == 'g':
-                    pass
+                    raise NotImplementedError
                 elif flags[0] == 'r':
-                    pass
+                    raise NotImplementedError
             elif command == 'search':
-                pass
+                raise NotImplementedError
 
         print('Thanks for trusting Mvie Lovers!')
+
+        conn.close()
 
 
 if __name__ == '__main__':

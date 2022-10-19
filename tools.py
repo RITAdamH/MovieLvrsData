@@ -9,7 +9,7 @@ def show_tools(conn: connection, username: str, by: str, ord: str) -> bool:
             cursr.execute(
                 f"select * from tools where username = '{username}' order by name {'asc' if ord == 'a' else 'desc'}")
         else:
-            raise NotImplementedError  # TODO
+            raise NotImplementedError  # TODO add sort by category
 
         tools = cursr.fetchall()
 
