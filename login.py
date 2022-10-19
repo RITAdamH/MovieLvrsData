@@ -13,6 +13,8 @@ log in a user if that user exists
 @param password: the users password
 @return true if user exists, false if not
 """
+
+
 def login_user(connection, username, password):
     cursr = connection.cursor()
     query = (" select * from users "
@@ -50,6 +52,8 @@ create a new user and add them to the database
 @param email: the new users email
 @return true if new user created, false otherwise
 """
+
+
 def create_user(connection, username, password, fname, lname, email):
     cursr = connection.cursor()
     query = ("insert into users(username, password, first_name, last_name,"
@@ -65,5 +69,6 @@ def create_user(connection, username, password, fname, lname, email):
         if e.diag.constraint_name == "users_email_key":
             return False, "Email"
         return False, "Username"
-    except:
+    except Exception as e:
+        print(e)
         return False, None
