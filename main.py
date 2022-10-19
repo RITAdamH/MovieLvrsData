@@ -1,4 +1,4 @@
-# Patrick J
+# Patrick
 
 from sshtunnel import SSHTunnelForwarder
 
