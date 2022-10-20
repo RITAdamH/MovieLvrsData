@@ -3,14 +3,25 @@ from typing import Any
 from psycopg2.extensions import cursor
 
 
-def show_tool(tool: tuple[Any], categs: list[str] | None = None) -> None:
-    print(f'{tool[1]} [{tool[0]}]')
-    print(f'"{tool[2]}"')
-    print(f'Purchased on {tool[3]} (${tool[4]:.2f})')
-    print(f'{"Shareable" if tool[5] else "Not shareable"}')
-    if categs is not None:
-        print(f'Categories: {", ".join(categs)}')
-    print()
+def show_tool(cur: cursor, username: str, tool: tuple[Any], show_categs: bool = True, tab: bool = False) -> None:
+    owned = tool[6] == username
+    start = '\t' if tab else ''
+    print(start + '-' * 80)
+    print(start + f'{tool[1]} [{tool[0]}]')
+    print(start + f'"{tool[2]}"')
+    if owned:
+        print(start + "Owned by you")
+        print(start + f'Purchased on {tool[3]} (${tool[4]:.2f})')
+    print(start + f'{"Shareable" if tool[5] else "Not shareable"}')
+    if owned and show_categs:
+        cur.execute(
+            f"select name from categories where username = '{username}' and cid in (select cid from tool_categs where barcode = '{tool[0]}') order by name asc")
+
+        categs = cur.fetchall()
+
+        print(
+            start + f'Categories: {", ".join([categ for categ, in categs])}')
+    print(start + '-' * 80)
 
 
 def show_tools(cur: cursor, username: str, by: str, ord: str) -> bool:
@@ -27,12 +38,7 @@ def show_tools(cur: cursor, username: str, by: str, ord: str) -> bool:
         print(
             f'Your tools ({"category" if by == "c" else "name"} {"ascending" if ord == "a" else "descending"}):')
         for tool in tools:
-            cur.execute(
-                f"select name from categories where username = '{username}' and cid in (select cid from tool_categs where barcode = '{tool[0]}') order by name asc")
-
-            categs = cur.fetchall()
-
-            show_tool(tool, [categ[0] for categ in categs])
+            show_tool(cur, username, tool)
     except:
         return False
 

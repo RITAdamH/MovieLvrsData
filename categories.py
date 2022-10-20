@@ -7,7 +7,7 @@ from tools import show_tool
 def add_categ_tool(cur: cursor, username: str, categ_name: str, tool_barcode: str) -> bool | None:
     try:
         cur.execute(
-            f"insert into tool_categs(barcode, cid) values (select barcode from tools where barcode = '{tool_barcode}' and username = '{username}', (select cid from categories where name = '{categ_name}' and username = '{username}'))")
+            f"insert into tool_categs(barcode, cid) values (select barcode from tools where username = '{username}' and barcode = '{tool_barcode}', (select cid from categories where username = '{username}' and name = '{categ_name}'))")
     except IntegrityError:
         return False
     except Exception as e:
@@ -31,7 +31,7 @@ def create_categ(cur: cursor, username: str, name: str) -> bool | None:
 def delete_categ(cur: cursor, username: str, name: str) -> bool | None:
     try:
         cur.execute(
-            f"delete from categories where name = '{name}' and username = '{username}'")
+            f"delete from categories where username = '{username}' and name = '{name}'")
     except:
         return None
 
@@ -41,7 +41,7 @@ def delete_categ(cur: cursor, username: str, name: str) -> bool | None:
 def delete_categ_tool(cur: cursor, username: str, categ_name: str, tool_barcode: str) -> bool | None:
     try:
         cur.execute(
-            f"delete from tool_categs where barcode = '{tool_barcode}' and cid in (select cid from categories where name = '{categ_name}' and username = '{username}')")
+            f"delete from tool_categs where barcode = '{tool_barcode}' and cid in (select cid from categories where username = '{username}' and name = '{categ_name}')")
     except:
         return None
 
@@ -51,7 +51,7 @@ def delete_categ_tool(cur: cursor, username: str, categ_name: str, tool_barcode:
 def edit_categ_name(cur: cursor, username: str, old_name: str, new_name: str) -> bool | None:
     try:
         cur.execute(
-            f"update categories set name = '{new_name}' where name = '{old_name}' and username = '{username}'")
+            f"update categories set name = '{new_name}' where username = '{username}' and name = '{old_name}'")
     except IntegrityError:
         return False
     except:
@@ -70,16 +70,17 @@ def show_categs(cur: cursor, username: str) -> bool:
         print(
             f'Your categories (name ascending):')
         for categ in categs:
-            print(categ[1])
-            print('-' * len(categ[1]))
-
             cur.execute(
                 f"select * from tools where barcode in (select barcode from tool_categs where cid = {categ[0]}) order by name asc")
 
             tools = cur.fetchall()
 
-            for tool in tools:
-                show_tool(tool)
+            print(f'{categ[1]}:')
+            if not tools:
+                print('\tEmpty')
+            else:
+                for tool in tools:
+                    show_tool(cur, username, tool, show_categs=False, tab=True)
 
             print()
     except:
