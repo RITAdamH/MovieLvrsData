@@ -15,30 +15,22 @@ COMMAND_FLAGS = {
     'search': ()
 }
 
+username = ''
+password = ''
+dbName = 'p32001_17'
+
 
 def main() -> None:
-    username = 'prj7465'
-    password = 'lintThespian@1'
-    dbName = 'p32001_17'
-
     with SSHTunnelForwarder(('starbug.cs.rit.edu', 22),
                             ssh_username=username,
                             ssh_password=password,
                             remote_bind_address=('localhost', 5432)) as server:
         server.start()
-        print("SSH tunnel established")
-        params = {
-            'database': dbName,
-            'user': username,
-            'password': password,
-            'host': 'localhost',
-            'port': server.local_bind_port,
-        }
-
-        con = connect(**params)
+        con = connect(database=dbName, user=username, password=password,
+                      host='localhost', port=server.local_bind_port)
         con.autocommit = True
         cur = con.cursor()
-        print("Database connection established")
+
         logged_in = False
 
         while not logged_in:
@@ -46,7 +38,6 @@ def main() -> None:
             inp = input(
                 'Enter "login" to login, "new" to create an account, or "quit" to quit: ').lower().strip()
             if inp == 'login':
-                print('Logging in')
                 username = input('Username: ')
                 password = input('Password: ')
                 res = login_user(cur, username, password)
@@ -191,7 +182,10 @@ def main() -> None:
                 elif flags[0] == 'r':
                     raise NotImplementedError
             elif command == 'search':
-                raise NotImplementedError
+                barcode = input('Tool barcode (enter to skip): ')
+                name = input('Name of tool to search for (enter to skip): ')
+                categ = input(
+                    'Category of tool to search for (enter to skip): ')
 
         print('Thanks for trusting Mvie Lovers!')
 
