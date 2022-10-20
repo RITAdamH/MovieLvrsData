@@ -1,7 +1,7 @@
 """
 filename: login.py
 Author: Brett Lubberts
-Description: File containing and functions that query the database to log
+Description: File containing any functions that query the database to log
 a user in, or create a new user
 """
 

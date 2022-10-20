@@ -1,6 +1,21 @@
+"""
+filename: search.py
+Author: Patrick Johnson
+Description: File containing any functions that query the database to search for a tool given a barcode,
+             name, or category
+"""
+
 from psycopg2.extensions import cursor
 
 from tools import show_tool
+
+"""
+search tools using a specified "barcode format"
+@param cur: the cursor to the database
+@param username: the users username
+@param barcode: the barcode to be searched
+@return True if execution successful (prints outcome), False if error
+"""
 
 
 def search_tools_barcode(cur: cursor, username: str, barcode: str) -> bool:
@@ -19,6 +34,15 @@ def search_tools_barcode(cur: cursor, username: str, barcode: str) -> bool:
         return False
 
     return True
+
+
+"""
+search tools using a standard name and category format
+@param cur: the cursor to the database
+@param username: the users username
+@param barcode: the name or category
+@return True if executions are successful (prints outcome), False if error
+"""
 
 
 def search_tools_name_categ(cur: cursor, username: str, name: str, categ: str) -> bool:
