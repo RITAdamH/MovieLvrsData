@@ -1,48 +1,6 @@
-# Users can sort tools by category or name (ascending and descending)
+# Psuedo code for future functions
 
 from typing import List
-
-
-# Command: search b (barcode)
-def inspect_tools(b: int) -> List[str]:
-    tools = []
-    # SQL
-
-    # SELECT *
-    # FROM tools
-    # WHERE barcode = b
-    # ORDER BY name ASC
-    return tools
-
-
-# Command: search n (name)
-def inspect_tools(n: str) -> List[str]:
-    tools = []
-    # SQL
-
-    # SELECT *
-    # FROM tools
-    # WHERE name = n
-    # ORDER BY name ASC
-    return tools
-
-
-# Command: search c (category)
-def inspect_tools(c: str) -> List[str]:
-    tools = []
-    # SQL
-
-    # SELECT *
-    # FROM tools
-    # WHERE barcode =
-    #   SELECT barcode
-    #   FROM tool_categs
-    #   WHERE cid =
-    #       SELECT cid
-    #       FROM categories
-    #       where name = c
-    # ORDER BY name ASC
-    return tools
 
 
 # Given status

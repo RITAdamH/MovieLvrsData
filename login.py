@@ -1,13 +1,15 @@
 """
 filename: login.py
 Author: Brett Lubberts
-Description: File containing and functions that query the database to log
+Description: File containing any functions that query the database to log
 a user in, or create a new user
 """
+
 
 from typing import Optional
 from psycopg2.errors import IntegrityError
 from psycopg2.extensions import cursor
+
 
 """
 log in a user if that user exists

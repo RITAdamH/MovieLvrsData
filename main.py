@@ -1,9 +1,15 @@
+"""
+filename: main.py
+Author: Brett Lubberts (bpl991), Connor Stange (cjs5232), Jose Estevez (jae9307),
+        Adam Harnish (afh9608), Patrick Johnson (prj7465)
+Description: Implementation for a Python interface so that users may interact with a Starbug database of tools.
+"""
+
+
 from configparser import ConfigParser
 from psycopg2 import connect
 from sshtunnel import SSHTunnelForwarder
-
-from categories import (add_categ_tool, create_categ, delete_categ,
-                        delete_categ_tool, edit_categ_name, show_categs)
+from categories import (add_categ_tool, create_categ, delete_categ, delete_categ_tool, edit_categ_name, show_categs)
 from login import create_user, login_user
 from requests import create_req
 from search import search_tools_barcode, search_tools_name_categ
@@ -46,7 +52,7 @@ def main() -> None:
         logged_in = False
 
         while not logged_in:
-            print('Welcome to MvieLvrs tools application')
+            print('Welcome to MvieLovers tools application')
             inp = input(
                 'Enter "login" to login, "new" to create an account, or "quit" to quit: ').lower().strip()
             if inp == 'login':
@@ -98,7 +104,7 @@ def main() -> None:
                 print(
                     'categ [v a e d]  -  manage your categories [view add edit delete]')
                 print(
-                    'req [g r]       -  manage your borrow requests [given recieved]')
+                    'req [g r]       -  manage your borrow requests [given received]')
             elif command == 'quit':
                 break
             elif command == 'tool':
@@ -199,7 +205,8 @@ def main() -> None:
                                 print('Added tool to category successfully')
                             else:
                                 print(
-                                    'Category or tool does not exist or tool is not owned or tool already is in category')
+                                    'Category or tool does not exist or tool is not owned or tool already is in '
+                                    'category')
                         elif inp == 'r':
                             tool_barcode = input('Tool barcode: ')
                             res = delete_categ_tool(
