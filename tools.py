@@ -28,7 +28,7 @@ def remove_tool(cur: cursor, username: str, barcode: str) -> Optional[bool]:
         cur.execute(
             f"update tools set username = null where username = '{username}' and barcode = '{barcode}'")
 
-        if cur.rowcount == 0:
+        if cur.rowcount == 0:  # tool doesn't exists or not owned by user
             return False
 
         cur.execute(

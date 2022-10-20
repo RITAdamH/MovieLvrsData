@@ -43,7 +43,7 @@ create a new user and add them to the database
 def create_user(cur: cursor, username: str, password: str, fname: str, lname: str, email: str) -> Optional[bool]:
     try:
         cur.execute(
-            f"insert into users(username, password, first_name, last_name, email, creation, last_access) values ('{username}', '{password}', '{fname}', '{lname}', '{email}', now(), now())")
+            f"insert into users values ('{username}', '{password}', '{fname}', '{lname}', '{email}')")
     except IntegrityError:
         return False
     except:
