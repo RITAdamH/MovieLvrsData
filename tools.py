@@ -8,11 +8,26 @@ def add_tool(cur: cursor, username: str, barcode: str) -> Optional[bool]:
     try:
         cur.execute(
             f"update tools set username = '{username}' where barcode = '{barcode}' and username is null")
-        return True
-    except IntegrityError:
-        return False
     except:
         return None
+
+    return cur.rowcount > 0
+
+
+def remove_tool(cur: cursor, username: str, barcode: str) -> Optional[bool]:
+    try:
+        cur.execute(
+            f"update tools set username = null where username = '{username}' and barcode = '{barcode}'")
+
+        if cur.rowcount == 0:
+            return False
+
+        cur.execute(
+            f"delete from tool_categs where barcode = '{barcode}' and cid in (select cid from categories where username = '{username}')")
+    except:
+        return None
+
+    return True
 
 
 def show_tool(cur: cursor, username: str, tool: Tuple[Any], show_categs: bool = True, tab: bool = False) -> None:

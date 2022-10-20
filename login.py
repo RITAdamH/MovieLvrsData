@@ -14,22 +14,18 @@ log in a user if that user exists
 @param cur: the cursor to the database
 @param username: the users username
 @param password: the users password
-@return True if logging in was successful, False if user didn't exist, None if error
+@return True if logging in was successful, False if credentials were incorrect, None if error
 """
 
 
 def login_user(cur: cursor, username: str, password: str) -> Optional[bool]:
     try:
         cur.execute(
-            f"select 1 from users where username = '{username}' and password = '{password}'")
-        if cur.rowcount > 0:
-            cur.execute(
-                f"update users set last_access = now() where username = '{username}'")
-            return True
+            f"update users set last_access = now() where username = '{username}' and password = '{password}'")
     except:
         return None
 
-    return False
+    return cur.rowcount > 0
 
 
 """
@@ -47,10 +43,10 @@ create a new user and add them to the database
 def create_user(cur: cursor, username: str, password: str, fname: str, lname: str, email: str) -> Optional[bool]:
     try:
         cur.execute(
-            f"insert into users(username, password, first_name, last_name, email, creation, last_access)"
-            "values ('{username}', '{password}', '{fname}', '{lname}', '{email}', now(), now())")
-        return True
+            f"insert into users(username, password, first_name, last_name, email, creation, last_access) values ('{username}', '{password}', '{fname}', '{lname}', '{email}', now(), now())")
     except IntegrityError:
         return False
     except:
         return None
+
+    return True
