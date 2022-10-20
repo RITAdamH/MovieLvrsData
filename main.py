@@ -1,26 +1,32 @@
+from os.path import exists
 from psycopg2 import connect
 from sshtunnel import SSHTunnelForwarder
 
 from categories import (add_categ_tool, create_categ, delete_categ,
                         delete_categ_tool, edit_categ_name, show_categs)
 from login import create_user, login_user
+from search import search_tools_barcode, search_tools_name_categ
 from tools import show_tools
 
 COMMAND_FLAGS = {
     'help': (),
     'quit': (),
-    'tool': ('v', 'a', 'e', 'd'),
+    'tool': ('v', 'a', 'e', 'd', 's'),
     'categ': ('v', 'a', 'e', 'd'),
-    'reqs': ('g', 'r'),
-    'search': ()
+    'req': ('g', 'r'),
 }
 
 DB_NAME = 'p32001_17'
 
 
 def main() -> None:
-    username = input('SSH username: ')
-    password = input('SSH password: ')
+    if exists('ssh'):
+        with open('ssh', 'r') as f:
+            username = f.readline().strip()
+            password = f.readline().strip()
+    else:
+        username = input('SSH username: ')
+        password = input('SSH password: ')
     with SSHTunnelForwarder(('starbug.cs.rit.edu', 22),
                             ssh_username=username,
                             ssh_password=password,
@@ -86,12 +92,11 @@ def main() -> None:
                 print('help             -  displays this menu')
                 print('quit             -  exits the program')
                 print(
-                    'tool [v a e d]   -  manage your tools [view add edit delete]')
+                    'tool [v a e d s]   -  manage your tools [view add edit delete search]')
                 print(
                     'categ [v a e d]  -  manage your categories [view add edit delete]')
                 print(
-                    'reqs [g r]       -  manage your borrow requests [given recieved]')
-                print('search           -  search for tool')
+                    'req [g r]       -  manage your borrow requests [given recieved]')
             elif command == 'quit':
                 break
             elif command == 'tool':
@@ -114,6 +119,17 @@ def main() -> None:
                     raise NotImplementedError
                 elif flags[0] == 'd':
                     raise NotImplementedError
+                elif flags[0] == 's':
+                    barcode = input('Tool barcode (enter to omit): ')
+                    if barcode:
+                        if not search_tools_barcode(cur, username, barcode):
+                            print('Error searching for tools')
+                    else:
+                        name = input('Tool name (enter to omit): ').lower()
+                        categ = input(
+                            'Tool category (enter to omit): ').lower()
+                        if not search_tools_name_categ(cur, username, name, categ):
+                            print('Error searching for tools')
             elif command == 'categ':
                 if flags[0] == 'v':
                     if not show_categs(cur, username):
@@ -178,19 +194,13 @@ def main() -> None:
                         print('Deleted successfully')
                     else:
                         print('Category does not exist')
-            elif command == 'reqs':
+            elif command == 'req':
                 if flags[0] == 'g':
                     raise NotImplementedError
                 elif flags[0] == 'r':
                     raise NotImplementedError
-            elif command == 'search':
-                barcode = input('Tool barcode (enter to skip): ')
-                name = input('Name of tool to search for (enter to skip): ')
-                categ = input(
-                    'Category of tool to search for (enter to skip): ')
 
         print('Thanks for trusting Mvie Lovers!')
-
         con.close()
 
 
