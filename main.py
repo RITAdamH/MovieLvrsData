@@ -6,7 +6,7 @@ from categories import (add_categ_tool, create_categ, delete_categ,
                         delete_categ_tool, edit_categ_name, show_categs)
 from login import create_user, login_user
 from search import search_tools_barcode, search_tools_name_categ
-from tools import add_tool, show_tools
+from tools import add_tool, remove_tool, show_tools
 
 COMMAND_FLAGS = {
     'help': (),
@@ -76,9 +76,6 @@ def main() -> None:
             else:
                 print('Unrecognized input')
 
-        if logged_in:
-            print('You are now logged in')
-
         while logged_in:
             print('Enter a command ("help" for help, "quit" to quit)')
             inp = input('> ').lower().strip()
@@ -125,7 +122,14 @@ def main() -> None:
                 elif flags[0] == 'e':
                     raise NotImplementedError
                 elif flags[0] == 'd':
-                    raise NotImplementedError
+                    barcode = input('Barcode: ')
+                    res = remove_tool(cur, username, barcode)
+                    if res is None:
+                        print('Error deleting tool')
+                    elif res:
+                        print('Tool deleted')
+                    else:
+                        print('Tool is not owned by you, or does not exist')
                 elif flags[0] == 's':
                     barcode = input('Tool barcode (enter to omit): ')
                     if barcode:
