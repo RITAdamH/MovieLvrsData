@@ -1,6 +1,5 @@
 from typing import Any, Optional, Tuple
 
-from psycopg2.errors import IntegrityError
 from psycopg2.extensions import cursor
 
 
@@ -8,6 +7,16 @@ def add_tool(cur: cursor, username: str, barcode: str) -> Optional[bool]:
     try:
         cur.execute(
             f"update tools set username = '{username}' where barcode = '{barcode}' and username is null")
+    except:
+        return None
+
+    return cur.rowcount > 0
+
+
+def edit_tool(cur: cursor, username: str, barcode: str, shareable: bool) -> Optional[bool]:
+    try:
+        cur.execute(
+            f"update tools set shareable = {shareable} where username = '{username}' and barcode = '{barcode}'")
     except:
         return None
 
