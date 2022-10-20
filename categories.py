@@ -11,7 +11,7 @@ def add_categ_tool(cur: cursor, username: str, categ_name: str, tool_barcode: st
             f"insert into tool_categs(barcode, cid) values (select barcode from tools where username = '{username}' and barcode = '{tool_barcode}', (select cid from categories where username = '{username}' and name = '{categ_name}'))")
     except IntegrityError:
         return False
-    except Exception as e:
+    except:
         return None
 
     return True
