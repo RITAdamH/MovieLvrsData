@@ -1,5 +1,4 @@
 from configparser import ConfigParser
-from os.path import exists
 from psycopg2 import connect
 from sshtunnel import SSHTunnelForwarder
 
