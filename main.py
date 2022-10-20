@@ -1,3 +1,4 @@
+from configparser import ConfigParser
 from os.path import exists
 from psycopg2 import connect
 from sshtunnel import SSHTunnelForwarder
@@ -20,13 +21,16 @@ DB_NAME = 'p32001_17'
 
 
 def main() -> None:
-    if exists('ssh'):
-        with open('ssh', 'r') as f:
-            username = f.readline().strip()
-            password = f.readline().strip()
+    config = ConfigParser()
+    config.read('ssh.ini')
+    if config.has_option('ssh', 'username') and config.has_option('ssh', 'password'):
+        username = config['ssh']['username']
+        password = config['ssh']['password']
     else:
+        print('No valid ssh.ini found, please enter credentials')
         username = input('SSH username: ')
         password = input('SSH password: ')
+
     with SSHTunnelForwarder(('starbug.cs.rit.edu', 22),
                             ssh_username=username,
                             ssh_password=password,
