@@ -6,7 +6,7 @@ from categories import (add_categ_tool, create_categ, delete_categ,
                         delete_categ_tool, edit_categ_name, show_categs)
 from login import create_user, login_user
 from search import search_tools_barcode, search_tools_name_categ
-from tools import show_tools
+from tools import add_tool, show_tools
 
 COMMAND_FLAGS = {
     'help': (),
@@ -114,7 +114,14 @@ def main() -> None:
                     else:
                         print('Invalid input')
                 elif flags[0] == 'a':
-                    raise NotImplementedError
+                    barcode = input('Barcode: ')
+                    res = add_tool(cur, username, barcode)
+                    if res is None:
+                        print('Error adding tool')
+                    elif res:
+                        print('Tool added')
+                    else:
+                        print('Tool is already owned, or does not exist')
                 elif flags[0] == 'e':
                     raise NotImplementedError
                 elif flags[0] == 'd':

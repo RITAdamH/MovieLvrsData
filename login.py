@@ -5,6 +5,7 @@ Description: File containing and functions that query the database to log
 a user in, or create a new user
 """
 
+from typing import Optional
 from psycopg2.errors import IntegrityError
 from psycopg2.extensions import cursor
 
@@ -17,7 +18,7 @@ log in a user if that user exists
 """
 
 
-def login_user(cur: cursor, username: str, password: str) -> bool | None:
+def login_user(cur: cursor, username: str, password: str) -> Optional[bool]:
     try:
         cur.execute(
             f"select 1 from users where username = '{username}' and password = '{password}'")
@@ -43,7 +44,7 @@ create a new user and add them to the database
 """
 
 
-def create_user(cur: cursor, username: str, password: str, fname: str, lname: str, email: str) -> bool | None:
+def create_user(cur: cursor, username: str, password: str, fname: str, lname: str, email: str) -> Optional[bool]:
     try:
         cur.execute(
             f"insert into users(username, password, first_name, last_name, email, creation, last_access)"
