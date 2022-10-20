@@ -6,7 +6,7 @@ from categories import (add_categ_tool, create_categ, delete_categ,
                         delete_categ_tool, edit_categ_name, show_categs)
 from login import create_user, login_user
 from search import search_tools_barcode, search_tools_name_categ
-from tools import add_tool, remove_tool, show_tools
+from tools import add_tool, edit_tool, remove_tool, show_tools
 
 COMMAND_FLAGS = {
     'help': (),
@@ -120,7 +120,20 @@ def main() -> None:
                     else:
                         print('Tool is already owned, or does not exist')
                 elif flags[0] == 'e':
-                    raise NotImplementedError
+                    barcode = input('Barcode: ')
+                    shareable = input(
+                        'Make shareable? (y/n): ').lower().strip()
+                    if shareable in ('y', 'n'):
+                        res = edit_tool(cur, username, barcode,
+                                        shareable == 'y')
+                        if res is None:
+                            print('Error editing tool')
+                        elif res:
+                            print('Tool edited')
+                        else:
+                            print('Tool is not owned by you, or does not exist')
+                    else:
+                        print('Invalid input')
                 elif flags[0] == 'd':
                     barcode = input('Barcode: ')
                     res = remove_tool(cur, username, barcode)
