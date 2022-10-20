@@ -11,6 +11,7 @@ from psycopg2 import connect
 from sshtunnel import SSHTunnelForwarder
 from categories import (add_categ_tool, create_categ, delete_categ, delete_categ_tool, edit_categ_name, show_categs)
 from login import create_user, login_user
+from requests import create_req
 from search import search_tools_barcode, search_tools_name_categ
 from tools import add_tool, edit_tool, remove_tool, show_tools
 
@@ -78,6 +79,7 @@ def main() -> None:
                     print('Error creating user')
                 elif res:
                     print('User created')
+                    logged_in = True
                 else:
                     print('Username or email already exists')
             elif inp == 'quit':
@@ -230,7 +232,27 @@ def main() -> None:
                         print('Category does not exist')
             elif command == 'req':
                 if flags[0] == 'g':
-                    raise NotImplementedError
+                    inp = input(
+                        'View, create or manage requests (v/c/m): ').lower().strip()
+                    if inp == 'v':
+                        pass
+                    elif inp == 'c':
+                        barcode = input('Tool barcode: ')
+                        date_required = input('Date required: ')
+                        duration = input('Duration: ')
+                        res = create_req(cur, username, barcode,
+                                         date_required, duration)
+                        if res is None:
+                            print('Error creating request')
+                        elif res:
+                            print('Request created successfully')
+                        else:
+                            print(
+                                'Tool does not exist or is owned by you or is not shareable')
+                    elif inp == 'm':
+                        pass
+                    else:
+                        print('Invalid input')
                 elif flags[0] == 'r':
                     raise NotImplementedError
 
