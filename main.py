@@ -195,7 +195,7 @@ def main() -> None:
                 name = input('Name of tool to search for: ')
                 categ = input(
                     'Category of tool to search for: ')
-                if not search_tools(cur, barcode, name, categ):
+                if not search_tools(cur, username, barcode, name, categ):
                     print('Error searching for tools')
 
         print('Thanks for trusting Mvie Lovers!')
