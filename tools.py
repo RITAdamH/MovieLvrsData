@@ -8,7 +8,7 @@ def show_tool(tool: tuple[Any], categs: list[str] | None = None) -> None:
     print(f'"{tool[2]}"')
     print(f'Purchased on {tool[3]} (${tool[4]:.2f})')
     print(f'{"Shareable" if tool[5] else "Not shareable"}')
-    print(f'Categories: {", ".join(categs) if categs else ""}')
+    print(f'Categories: {", ".join(categs) if categs is not None else ""}')
     print()
 
 
