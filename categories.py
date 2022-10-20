@@ -1,20 +1,47 @@
+"""
+filename: categories.py
+Author: Patrick Johnson
+Description: File containing any functions that query the database to alter categories for tools
+"""
+
+
 from typing import Optional
 from psycopg2.errors import IntegrityError
 from psycopg2.extensions import cursor
-
 from tools import show_tool
+
+
+"""
+add tool to category
+@param cur: the cursor to the database
+@param username: the users username
+@param categ_name: the name of a category
+@param tool_barcode: the barcode of the tool to add
+@return True if execution successful, False if integrity error (user error), None if other error
+"""
 
 
 def add_categ_tool(cur: cursor, username: str, categ_name: str, tool_barcode: str) -> Optional[bool]:
     try:
         cur.execute(
-            f"insert into tool_categs(barcode, cid) values (select barcode from tools where username = '{username}' and barcode = '{tool_barcode}', (select cid from categories where username = '{username}' and name = '{categ_name}'))")
+            f"insert into tool_categs(barcode, cid) values (select barcode from tools where username = '{username}' "
+            f"and barcode = '{tool_barcode}', (select cid from categories where username = '{username}' and name = '"
+            f"{categ_name}'))")
     except IntegrityError:
         return False
     except:
         return None
 
     return True
+
+
+"""
+create category of tools
+@param cur: the cursor to the database
+@param username: the users username
+@param name: the name of a new category
+@return True if execution successful, False if integrity error (user error), None if other error
+"""
 
 
 def create_categ(cur: cursor, username: str, name: str) -> Optional[bool]:
@@ -29,6 +56,15 @@ def create_categ(cur: cursor, username: str, name: str) -> Optional[bool]:
     return True
 
 
+"""
+delete category of tools
+@param cur: the cursor to the database
+@param username: the users username
+@param name: the name of a category
+@return True if execution successful, False if integrity error (user error), None if other error
+"""
+
+
 def delete_categ(cur: cursor, username: str, name: str) -> Optional[bool]:
     try:
         cur.execute(
@@ -39,14 +75,35 @@ def delete_categ(cur: cursor, username: str, name: str) -> Optional[bool]:
     return cur.rowcount > 0
 
 
+"""
+delete a tool from a category
+@param cur: the cursor to the database
+@param username: the users username
+@param categ_name: the name of a category
+@param tool_barcode: the barcode of the tool to be deleted
+@return True if execution successful, False if integrity error (user error), None if other error
+"""
+
+
 def delete_categ_tool(cur: cursor, username: str, categ_name: str, tool_barcode: str) -> Optional[bool]:
     try:
         cur.execute(
-            f"delete from tool_categs where barcode = '{tool_barcode}' and cid in (select cid from categories where username = '{username}' and name = '{categ_name}')")
+            f"delete from tool_categs where barcode = '{tool_barcode}' and cid in (select cid from categories where "
+            f"username = '{username}' and name = '{categ_name}')")
     except:
         return None
 
     return cur.rowcount > 0
+
+
+"""
+edit the name of a category
+@param cur: the cursor to the database
+@param username: the users username
+@param old_name: the current name of a category
+@param new_name: the new name of the category
+@return True if execution successful, False if integrity error (user error), None if other error
+"""
 
 
 def edit_categ_name(cur: cursor, username: str, old_name: str, new_name: str) -> Optional[bool]:
@@ -61,6 +118,14 @@ def edit_categ_name(cur: cursor, username: str, old_name: str, new_name: str) ->
     return cur.rowcount > 0
 
 
+"""
+show all categories
+@param cur: the cursor to the database
+@param username: the users username
+@return True if execution successful (prints categories), False if error
+"""
+
+
 def show_categs(cur: cursor, username: str) -> bool:
     try:
         cur.execute(
@@ -72,7 +137,8 @@ def show_categs(cur: cursor, username: str) -> bool:
             f'Your categories (name ascending):')
         for categ in categs:
             cur.execute(
-                f"select * from tools where barcode in (select barcode from tool_categs where cid = {categ[0]}) order by name asc")
+                f"select * from tools where barcode in (select barcode from tool_categs where cid = {categ[0]}) order "
+                f"by name asc")
 
             tools = cur.fetchall()
 

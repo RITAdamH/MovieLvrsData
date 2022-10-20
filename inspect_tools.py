@@ -1,4 +1,4 @@
-# Users can sort tools by category or name (ascending and descending)
+# Psuedo code for future functions
 
 from typing import List
 
