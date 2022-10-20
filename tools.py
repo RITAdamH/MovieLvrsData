@@ -1,9 +1,21 @@
-from typing import Any
+from typing import Any, Optional, Tuple
 
+from psycopg2.errors import IntegrityError
 from psycopg2.extensions import cursor
 
 
-def show_tool(cur: cursor, username: str, tool: tuple[Any], show_categs: bool = True, tab: bool = False) -> None:
+def add_tool(cur: cursor, username: str, barcode: str) -> Optional[bool]:
+    try:
+        cur.execute(
+            f"update tools set username = '{username}' where barcode = '{barcode}' and username is null")
+        return True
+    except IntegrityError:
+        return False
+    except:
+        return None
+
+
+def show_tool(cur: cursor, username: str, tool: Tuple[Any], show_categs: bool = True, tab: bool = False) -> None:
     owned = tool[6] == username
     start = '\t' if tab else ''
     print(start + '-' * 80)
