@@ -1,9 +1,11 @@
+from os.path import exists
 from psycopg2 import connect
 from sshtunnel import SSHTunnelForwarder
 
 from categories import (add_categ_tool, create_categ, delete_categ,
                         delete_categ_tool, edit_categ_name, show_categs)
 from login import create_user, login_user
+from search import search_tools
 from tools import show_tools
 
 COMMAND_FLAGS = {
@@ -19,8 +21,13 @@ DB_NAME = 'p32001_17'
 
 
 def main() -> None:
-    username = input('SSH username: ')
-    password = input('SSH password: ')
+    if exists('ssh'):
+        with open('ssh', 'r') as f:
+            username = f.readline().strip()
+            password = f.readline().strip()
+    else:
+        username = input('SSH username: ')
+        password = input('SSH password: ')
     with SSHTunnelForwarder(('starbug.cs.rit.edu', 22),
                             ssh_username=username,
                             ssh_password=password,
@@ -184,10 +191,12 @@ def main() -> None:
                 elif flags[0] == 'r':
                     raise NotImplementedError
             elif command == 'search':
-                barcode = input('Tool barcode (enter to skip): ')
-                name = input('Name of tool to search for (enter to skip): ')
+                barcode = input('Tool barcode: ')
+                name = input('Name of tool to search for: ')
                 categ = input(
-                    'Category of tool to search for (enter to skip): ')
+                    'Category of tool to search for: ')
+                if not search_tools(cur, barcode, name, categ):
+                    print('Error searching for tools')
 
         print('Thanks for trusting Mvie Lovers!')
 
