@@ -1,13 +1,14 @@
 from psycopg2.errors import IntegrityError
 from psycopg2.extensions import cursor
 
+from tools import show_tool
+
 
 def add_categ_tool(cur: cursor, username: str, categ_name: str, tool_barcode: str) -> bool | None:
     try:
-        # check if user owns tool
         cur.execute(
             f"select 1 from tools where barcode = '{tool_barcode}' and username = '{username}'")
-        if cur.rowcount == 0:
+        if cur.rowcount == 0:  # check if user actually owns tool
             return False
 
         cur.execute(
@@ -75,7 +76,16 @@ def show_categs(cur: cursor, username: str) -> bool:
             f'Your categories (name ascending):')
         for categ in categs:
             print(categ[1])
-            # TODO: show all tools in categ
+            print('-' * len(categ[1]))
+
+            cur.execute(
+                f"select * from tools where barcode in (select barcode from tool_categs where cid = {categ[0]}) order by name asc")
+
+            tools = cur.fetchall()
+
+            for tool in tools:
+                show_tool(tool)
+
             print()
     except:
         return False
