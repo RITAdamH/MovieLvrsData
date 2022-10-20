@@ -15,8 +15,6 @@ COMMAND_FLAGS = {
     'search': ()
 }
 
-username = ''
-password = ''
 dbName = 'p32001_17'
 
 
@@ -26,6 +24,8 @@ def main() -> None:
                             ssh_password=password,
                             remote_bind_address=('localhost', 5432)) as server:
         server.start()
+        username = input('SSH username: ')
+        password = input('SSH password: ')
         con = connect(database=dbName, user=username, password=password,
                       host='localhost', port=server.local_bind_port)
         con.autocommit = True
