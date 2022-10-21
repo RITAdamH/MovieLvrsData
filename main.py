@@ -9,11 +9,12 @@ Description: Implementation for a Python interface so that users may interact wi
 from configparser import ConfigParser
 from psycopg2 import connect
 from sshtunnel import SSHTunnelForwarder
-from categories import (add_categ_tool, create_categ, delete_categ, delete_categ_tool, edit_categ_name, show_categs)
+from categories import (add_categ_tool, create_categ, delete_categ,
+                        delete_categ_tool, edit_categ_name, show_categs)
 from login import create_user, login_user
-from requests import create_req
+from requests import create_req, show_reqs_given, show_reqs_received
 from search import search_tools_barcode, search_tools_name_categ
-from tools import add_tool, edit_tool, remove_tool, show_tools
+from tools import add_tool, edit_tool, remove_tool, show_tools_available, show_tools_borrowed, show_tools_lent, show_tools_owned
 
 COMMAND_FLAGS = {
     'help': (),
@@ -109,14 +110,28 @@ def main() -> None:
                 break
             elif command == 'tool':
                 if flags[0] == 'v':
-                    by = input(
-                        'Sort by category or name? (c/n): ').lower().strip()
-                    if by in ('c', 'n'):
-                        ord = input(
-                            'Ascending or descending? (a/d): ').lower().strip()
-                        if ord in ('a', 'd'):
-                            if not show_tools(cur, username, by, ord):
-                                print('Error showing tools')
+                    inp = input(
+                        'Show all available, all borrowed, all lent, or all owned tools? (a/b/l/o): ').lower().strip()
+                    if inp == 'a':
+                        if not show_tools_available(cur, username):
+                            print('Error showing tools')
+                    elif inp == 'b':
+                        if not show_tools_borrowed(cur, username):
+                            print('Error showing tools')
+                    elif inp == 'l':
+                        if not show_tools_lent(cur, username):
+                            print('Error showing tools')
+                    elif inp == 'o':
+                        by = input(
+                            'Sort by category or name? (c/n): ').lower().strip()
+                        if by in ('c', 'n'):
+                            ord = input(
+                                'Ascending or descending? (a/d): ').lower().strip()
+                            if ord in ('a', 'd'):
+                                if not show_tools_owned(cur, username, by, ord):
+                                    print('Error showing tools')
+                            else:
+                                print('Invalid input')
                         else:
                             print('Invalid input')
                     else:
@@ -235,7 +250,8 @@ def main() -> None:
                     inp = input(
                         'View, create or manage requests (v/c/m): ').lower().strip()
                     if inp == 'v':
-                        pass
+                        if not show_reqs_given(cur, username):
+                            print('Error showing requests')
                     elif inp == 'c':
                         barcode = input('Tool barcode: ')
                         date_required = input('Date required: ')
@@ -248,13 +264,21 @@ def main() -> None:
                             print('Request created successfully')
                         else:
                             print(
-                                'Tool does not exist or is owned by you or is not shareable')
+                                'Tool does not exist or is owned by you or is not shareable or is already lent out')
                     elif inp == 'm':
-                        pass
+                        raise NotImplementedError
                     else:
                         print('Invalid input')
                 elif flags[0] == 'r':
-                    raise NotImplementedError
+                    inp = input(
+                        'View or manage requests (v/m): ').lower().strip()
+                    if inp == 'v':
+                        if not show_reqs_received(cur, username):
+                            print('Error showing requests')
+                    elif inp == 'm':
+                        raise NotImplementedError
+                    else:
+                        print('Invalid input')
 
         print('Thanks for trusting Mvie Lovers!')
         con.close()

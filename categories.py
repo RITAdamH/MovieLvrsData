@@ -133,23 +133,27 @@ def show_categs(cur: cursor, username: str) -> bool:
 
         categs = cur.fetchall()
 
-        print(
-            f'Your categories (name ascending):')
-        for categ in categs:
-            cur.execute(
-                f"select * from tools where barcode in (select barcode from tool_categs where cid = {categ[0]}) order "
-                f"by name asc")
+        if not categs:
+            print('No categories found')
+        else:
+            print(
+                f'Your categories ({len(categs)}) [name ascending]:')
+            for categ in categs:
+                cur.execute(
+                    f"select * from tools where barcode in (select barcode from tool_categs where cid = {categ[0]}) order "
+                    f"by name asc")
 
-            tools = cur.fetchall()
+                tools = cur.fetchall()
 
-            print(f'{categ[1]}:')
-            if not tools:
-                print('\tEmpty')
-            else:
-                for tool in tools:
-                    show_tool(cur, username, tool, show_categs=False, tab=True)
+                print(f'{categ[1]}:')
+                if not tools:
+                    print('\tEmpty')
+                else:
+                    for tool in tools:
+                        show_tool(cur, username, tool,
+                                  show_categs=False, tab=True)
 
-            print()
+                print()
     except:
         return False
 

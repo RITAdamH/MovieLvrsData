@@ -4,8 +4,9 @@ Author: Patrick Johnson
 Description: File containing any functions that query the database to interact with tools
 """
 
-
-from typing import Any, Optional, Tuple
+from datetime import date, datetime
+from decimal import Decimal
+from typing import Optional, Tuple
 from psycopg2.extensions import cursor
 
 
@@ -85,30 +86,135 @@ show tool
 """
 
 
-def show_tool(cur: cursor, username: str, tool: Tuple[Any], show_categs: bool = True, tab: bool = False) -> None:
-    owned = tool[6] == username
-    start = '\t' if tab else ''
-    print(start + '-' * 80)
-    print(start + f'{tool[1]} [{tool[0]}]')
-    print(start + f'"{tool[2]}"')
-    if owned:
-        print(start + "Owned by you")
-        print(start + f'Purchased on {tool[3]} (${tool[4]:.2f})')
-    print(start + f'{"Shareable" if tool[5] else "Not shareable"}')
-    if owned and show_categs:
+def show_tool(cur: cursor, username: str, tool: Tuple[str, str, Optional[str], Optional[date], Optional[Decimal], bool, Optional[str]], show_categs: bool = True, tab: bool = False) -> None:
+    try:
+        barcode, name, description, purchase_date, purchase_price, shareable, tool_username = tool
+
+        start = '\t' if tab else ''
+
+        print(start + '-' * 50)
+
+        print(start + f'{name} [{barcode}]')
+
+        print(start + f'"{description}"')
+
+        if tool_username == username:
+            print(start + 'Owned by you')
+            print(
+                start + f'Purchased on {purchase_date} (${purchase_price:.2f})')
+
+        print(start + f'{"Shareable" if shareable else "Not shareable"}')
+
+        if show_categs:
+            cur.execute(
+                f"select name from categories where username = '{username}' and cid in (select cid from tool_categs where "
+                f"barcode = '{barcode}') order by name")
+
+            categs = cur.fetchall()
+
+            if categs:
+                print(
+                    start + f'Categories: {", ".join(name for name, in categs)}')
+
         cur.execute(
-            f"select name from categories where username = '{username}' and cid in (select cid from tool_categs where "
-            f"barcode = '{tool[0]}') order by name asc")
+            f"select tool_reqs.username, tool_reqs.last_status_change, tool_reqs.expected_return from tool_reqs, tools where tool_reqs.barcode = tools.barcode and tool_reqs.barcode = '{barcode}' and (tool_reqs.username = '{username}' or tools.username = '{username}') and tool_reqs.borrow_status = 'Accepted' and tool_reqs.returned_date is null order by tool_reqs.last_status_change")
 
-        categs = cur.fetchall()
+        borrows = cur.fetchone()
 
-        print(
-            start + f'Categories: {", ".join([categ for categ, in categs])}')
-    print(start + '-' * 80)
+        if borrows is not None:
+            borrow_username, date, expected_return = borrows
+
+            if borrow_username == username:
+                print(
+                    start + f'Borrowing from {tool_username} since {date.date()} (expected back {expected_return})')
+            else:
+                print(
+                    start + f'Borrowed by {borrow_username} since {date.date()} (expected back {expected_return})')
+
+            if datetime.now().date() > expected_return:
+                print(start + 'OVERDUE')
+
+        print(start + '-' * 50)
+    except:
+        print('Error showing tool')
+
+
+def show_tools_available(cur: cursor, username: str) -> bool:
+    try:
+        cur.execute(
+            f"select * from tools where shareable and username != '{username}' and barcode not in (select barcode from tool_reqs where borrow_status != 'Accepted' or returned_date is not null) order by name")
+
+        tools = cur.fetchall()
+
+        if not tools:
+            print('No tools available')
+        else:
+            print(f'Available tools ({len(tools)}) [name ascending]:')
+            for tool in tools:
+                show_tool(cur, username, tool)
+    except:
+        return False
+
+    return True
 
 
 """
-show tools
+show borrowed tools
+@param cur: the cursor to the database
+@param username: the users username
+@return True if execution successful, False if integrity error (user error)
+"""
+
+
+def show_tools_borrowed(cur: cursor, username: str) -> bool:
+    try:
+        cur.execute(
+            f"select tools.* from tools, tool_reqs where tools.barcode = tool_reqs.barcode and tools.barcode in (select barcode from tool_reqs where username = '{username}' and borrow_status = 'Accepted' and returned_date is null) order by tool_reqs.last_status_change")
+
+        tools = cur.fetchall()
+
+        if not tools:
+            print('You have no borrowed tools')
+        else:
+            print(
+                f'Your borrowed tools ({len(tools)}) [lend date ascending]:')
+            for tool in tools:
+                show_tool(cur, username, tool)
+    except:
+        return False
+
+    return True
+
+
+"""
+show tools lent
+@param cur: the cursor to the database
+@param username: the users username
+@return True if execution successful, False if integrity error (user error)
+"""
+
+
+def show_tools_lent(cur: cursor, username: str) -> bool:
+    try:
+        cur.execute(
+            f"select tools.* from tools, tool_reqs where tools.barcode = tool_reqs.barcode and tools.username = '{username}' and tools.barcode in (select barcode from tool_reqs where borrow_status = 'Accepted' and returned_date is null) order by tool_reqs.last_status_change")
+
+        tools = cur.fetchall()
+
+        if not tools:
+            print('You have no lent tools')
+        else:
+            print(f'Your lent tools ({len(tools)}) [lend date ascending]:')
+            for tool in tools:
+                show_tool(cur, username, tool)
+    except:
+        return False
+
+    return True
+
+
+"""
+show tools owned
 @param cur: the cursor to the database
 @param username: the users username
 @param by: the attribute in which to order the tools
@@ -117,7 +223,7 @@ show tools
 """
 
 
-def show_tools(cur: cursor, username: str, by: str, ord: str) -> bool:
+def show_tools_owned(cur: cursor, username: str, by: str, ord: str) -> bool:
     try:
         if by == 'n':
             cur.execute(
@@ -130,10 +236,13 @@ def show_tools(cur: cursor, username: str, by: str, ord: str) -> bool:
 
         tools = cur.fetchall()
 
-        print(
-            f'Your tools ({"category" if by == "c" else "name"} {"ascending" if ord == "a" else "descending"}):')
-        for tool in tools:
-            show_tool(cur, username, tool)
+        if not tools:
+            print('You have no tools')
+        else:
+            print(
+                f'Your tools ({len(tools)}) [{"category" if by == "c" else "name"} {"ascending" if ord == "a" else "descending"}]:')
+            for tool in tools:
+                show_tool(cur, username, tool)
     except:
         return False
 
