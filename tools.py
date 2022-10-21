@@ -177,7 +177,7 @@ def show_tools_borrowed(cur: cursor, username: str) -> bool:
             print('You have no borrowed tools')
         else:
             print(
-                f'Your borrowed tools ({len(tools)}) [borrowed date ascending]:')
+                f'Your borrowed tools ({len(tools)}) [lend date ascending]:')
             for tool in tools:
                 show_tool(cur, username, tool)
     except:

@@ -1,16 +1,17 @@
 from datetime import date, datetime, timedelta
 from psycopg2.errors import IntegrityError
 from psycopg2.extensions import cursor
-from typing import Any, Optional, Tuple
+from typing import Optional, Tuple
 
 
 def create_req(cur: cursor, username: str, barcode: str, date_required: str, duration: str) -> Optional[bool]:
     try:
         cur.execute(
             f"insert into tool_reqs values ('{username}', (select barcode from tools where barcode = '{barcode}' and shareable and username != '{username}' and barcode not in (select barcode from tool_reqs where borrow_status != 'Accepted' or returned_date is not null)), '{date_required}', '{duration}')")
-    except IntegrityError as e:
+    except IntegrityError:
         return False
     except Exception as e:
+        print(type(e))
         return None
 
     return True
