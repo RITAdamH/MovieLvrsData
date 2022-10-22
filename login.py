@@ -23,7 +23,7 @@ log in a user if that user exists
 def login_user(cur: cursor, username: str, password: str) -> Optional[bool]:
     try:
         cur.execute(
-            f"update users set last_access = now() where username = '{username}' and password = '{password}'")
+            f"update users set last_access = current_timestamp where username = '{username}' and password = '{password}'")
     except:
         return None
 
