@@ -134,7 +134,7 @@ def show_tool(cur: cursor, username: str, tool: Tuple[str, str, Optional[str], O
                     start + f'Categories: {", ".join(name for name, in categs)}')
 
         cur.execute(
-            f"select tool_reqs.username, tool_reqs.last_status_change, tool_reqs.expected_return_date from tool_reqs, tools where tool_reqs.barcode = tools.barcode and tool_reqs.barcode = '{barcode}' and (tool_reqs.username = '{username}' or tools.username = '{username}') and tool_reqs.status = 'Accepted' and tool_reqs.date_returned is null order by tool_reqs.last_status_change")
+            f"select tool_reqs.username, tool_reqs.last_status_change, tool_reqs.expected_return_date from tool_reqs, tools where tool_reqs.barcode = tools.barcode and tool_reqs.barcode = '{barcode}' and (tool_reqs.username = '{username}' or tools.username = '{username}') and tool_reqs.status = 'Accepted' and tool_reqs.date_returned is null")
 
         borrows = cur.fetchone()
 
@@ -186,7 +186,7 @@ show borrowed tools
 def show_tools_borrowed(cur: cursor, username: str) -> bool:
     try:
         cur.execute(
-            f"select tools.* from tools, tool_reqs where tools.barcode = tool_reqs.barcode and tools.barcode in (select barcode from tool_reqs where username = '{username}' and status = 'Accepted' and date_returned is null) order by tool_reqs.last_status_change")
+            f"select tools.* from tools, tool_reqs where tools.barcode = tool_reqs.barcode and tools.barcode in (select barcode from tool_reqs where username = '{username}' and status = 'Accepted' and date_returned is null) order by tool_reqs.last_status_change, tools.name")
 
         tools = cur.fetchall()
 
@@ -214,7 +214,7 @@ show tools lent
 def show_tools_lent(cur: cursor, username: str) -> bool:
     try:
         cur.execute(
-            f"select tools.* from tools, tool_reqs where tools.barcode = tool_reqs.barcode and tools.username = '{username}' and tools.barcode in (select barcode from tool_reqs where status = 'Accepted' and date_returned is null) order by tool_reqs.last_status_change")
+            f"select tools.* from tools, tool_reqs where tools.barcode = tool_reqs.barcode and tools.username = '{username}' and tools.barcode in (select barcode from tool_reqs where status = 'Accepted' and date_returned is null) order by tool_reqs.last_status_change, tools.name")
 
         tools = cur.fetchall()
 
@@ -249,7 +249,7 @@ def show_tools_owned(cur: cursor, username: str, by: str, ord: str) -> bool:
             cur.execute(
                 f"select * from tools where username = '{username}' order by (select min(name) from categories where "
                 f"username = '{username}' and cid in (select cid from tool_categs where barcode = tools.barcode)) "
-                f"{'asc' if ord == 'a' else 'desc'} nulls last")
+                f"{'asc' if ord == 'a' else 'desc'} nulls last, name")
 
         tools = cur.fetchall()
 

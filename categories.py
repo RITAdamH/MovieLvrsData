@@ -129,7 +129,7 @@ show all categories
 def show_categs(cur: cursor, username: str) -> bool:
     try:
         cur.execute(
-            f"select * from categories where username = '{username}' order by name asc")
+            f"select * from categories where username = '{username}' order by name")
 
         categs = cur.fetchall()
 
@@ -141,7 +141,7 @@ def show_categs(cur: cursor, username: str) -> bool:
             for categ in categs:
                 cur.execute(
                     f"select * from tools where barcode in (select barcode from tool_categs where cid = {categ[0]}) order "
-                    f"by name asc")
+                    f"by name")
 
                 tools = cur.fetchall()
 
