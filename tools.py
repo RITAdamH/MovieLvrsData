@@ -61,18 +61,29 @@ remove tool
 def remove_tool(cur: cursor, username: str, barcode: str) -> Optional[bool]:
     try:
         cur.execute(
-            f"update tools set username = null where username = '{username}' and barcode = '{barcode}'")
+            f"update tools set username = null from tool_reqs where tools.username = '{username}' and tools.barcode = '{barcode}' and (tool_reqs.status != 'Accepted' or tool_reqs.date_returned is not null)")
 
-        if cur.rowcount == 0:  # tool doesn't exists or not owned by user
+        if cur.rowcount == 0:
             return False
 
         cur.execute(
             f"delete from tool_categs where barcode = '{barcode}' and cid in (select cid from categories where "
             f"username = '{username}')")
+        cur.execute(f"delete from tool_reqs where barcode = '{barcode}'")
     except:
         return None
 
     return True
+
+
+def return_tool(cur: cursor, username: str, barcode: str) -> Optional[bool]:
+    try:
+        cur.execute(
+            f"update tool_reqs set date_returned = current_date where barcode = '{barcode}' and username = '{username}' and status = 'Accepted' and date_returned is null")
+    except:
+        return None
+
+    return cur.rowcount > 0
 
 
 """
@@ -96,12 +107,18 @@ def show_tool(cur: cursor, username: str, tool: Tuple[str, str, Optional[str], O
 
         print(start + f'{name} [{barcode}]')
 
-        print(start + f'"{description}"')
+        if description is not None:
+            print(start + f'"{description}"')
 
         if tool_username == username:
             print(start + 'Owned by you')
-            print(
-                start + f'Purchased on {purchase_date} (${purchase_price:.2f})')
+            if purchase_date is not None and purchase_price is not None:
+                print(
+                    start + f'Purchased on {purchase_date} (${purchase_price:.2f})')
+            elif purchase_date is not None:
+                print(start + f'Purchased on {purchase_date}')
+            elif purchase_price is not None:
+                print(start + f'${purchase_price:.2f}')
 
         print(start + f'{"Shareable" if shareable else "Not shareable"}')
 
@@ -117,21 +134,21 @@ def show_tool(cur: cursor, username: str, tool: Tuple[str, str, Optional[str], O
                     start + f'Categories: {", ".join(name for name, in categs)}')
 
         cur.execute(
-            f"select tool_reqs.username, tool_reqs.last_status_change, tool_reqs.expected_return from tool_reqs, tools where tool_reqs.barcode = tools.barcode and tool_reqs.barcode = '{barcode}' and (tool_reqs.username = '{username}' or tools.username = '{username}') and tool_reqs.borrow_status = 'Accepted' and tool_reqs.returned_date is null order by tool_reqs.last_status_change")
+            f"select tool_reqs.username, tool_reqs.last_status_change, tool_reqs.expected_return_date from tool_reqs, tools where tool_reqs.barcode = tools.barcode and tool_reqs.barcode = '{barcode}' and (tool_reqs.username = '{username}' or tools.username = '{username}') and tool_reqs.status = 'Accepted' and tool_reqs.date_returned is null order by tool_reqs.last_status_change")
 
         borrows = cur.fetchone()
 
         if borrows is not None:
-            borrow_username, date, expected_return = borrows
+            borrow_username, date, expected_return_date = borrows
 
             if borrow_username == username:
                 print(
-                    start + f'Borrowing from {tool_username} since {date.date()} (expected back {expected_return})')
+                    start + f'Borrowing from {tool_username} since {date.date()} (expected back {expected_return_date})')
             else:
                 print(
-                    start + f'Borrowed by {borrow_username} since {date.date()} (expected back {expected_return})')
+                    start + f'Borrowed by {borrow_username} since {date.date()} (expected back {expected_return_date})')
 
-            if datetime.now().date() > expected_return:
+            if datetime.now().date() > expected_return_date:
                 print(start + 'OVERDUE')
 
         print(start + '-' * 50)
@@ -142,7 +159,7 @@ def show_tool(cur: cursor, username: str, tool: Tuple[str, str, Optional[str], O
 def show_tools_available(cur: cursor, username: str) -> bool:
     try:
         cur.execute(
-            f"select * from tools where shareable and username != '{username}' and barcode not in (select barcode from tool_reqs where borrow_status != 'Accepted' or returned_date is not null) order by name")
+            f"select * from tools where shareable and username != '{username}' and barcode not in (select barcode from tool_reqs where status != 'Accepted' or date_returned is not null) order by name")
 
         tools = cur.fetchall()
 
@@ -169,7 +186,7 @@ show borrowed tools
 def show_tools_borrowed(cur: cursor, username: str) -> bool:
     try:
         cur.execute(
-            f"select tools.* from tools, tool_reqs where tools.barcode = tool_reqs.barcode and tools.barcode in (select barcode from tool_reqs where username = '{username}' and borrow_status = 'Accepted' and returned_date is null) order by tool_reqs.last_status_change")
+            f"select tools.* from tools, tool_reqs where tools.barcode = tool_reqs.barcode and tools.barcode in (select barcode from tool_reqs where username = '{username}' and status = 'Accepted' and date_returned is null) order by tool_reqs.last_status_change")
 
         tools = cur.fetchall()
 
@@ -197,7 +214,7 @@ show tools lent
 def show_tools_lent(cur: cursor, username: str) -> bool:
     try:
         cur.execute(
-            f"select tools.* from tools, tool_reqs where tools.barcode = tool_reqs.barcode and tools.username = '{username}' and tools.barcode in (select barcode from tool_reqs where borrow_status = 'Accepted' and returned_date is null) order by tool_reqs.last_status_change")
+            f"select tools.* from tools, tool_reqs where tools.barcode = tool_reqs.barcode and tools.username = '{username}' and tools.barcode in (select barcode from tool_reqs where status = 'Accepted' and date_returned is null) order by tool_reqs.last_status_change")
 
         tools = cur.fetchall()
 

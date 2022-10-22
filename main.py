@@ -12,15 +12,15 @@ from sshtunnel import SSHTunnelForwarder
 from categories import (add_categ_tool, create_categ, delete_categ,
                         delete_categ_tool, edit_categ_name, show_categs)
 from login import create_user, login_user
-from requests import create_req, show_reqs_given, show_reqs_received
+from requests import accept_req, create_req, delete_req, reject_req, show_reqs_given, show_reqs_received
 from search import search_tools_barcode, search_tools_name_categ
-from tools import add_tool, edit_tool, remove_tool, show_tools_available, show_tools_borrowed, show_tools_lent, show_tools_owned
+from tools import add_tool, edit_tool, remove_tool, return_tool, show_tools_available, show_tools_borrowed, show_tools_lent, show_tools_owned
 
 COMMAND_FLAGS = {
     'help': (),
     'quit': (),
-    'tool': ('v', 'a', 'e', 'd', 's'),
-    'categ': ('v', 'a', 'e', 'd'),
+    'tool': ('v', 'a', 'e', 'd', 'r', 's'),
+    'categ': ('v', 'c', 'e', 'd'),
     'req': ('g', 'r'),
 }
 
@@ -31,20 +31,20 @@ def main() -> None:
     config = ConfigParser()
     config.read('ssh.ini')
     if config.has_option('ssh', 'username') and config.has_option('ssh', 'password'):
-        username = config['ssh']['username']
-        password = config['ssh']['password']
+        ssh_username = config['ssh']['username']
+        ssh_password = config['ssh']['password']
     else:
         print('No valid ssh.ini found, please enter credentials')
-        username = input('SSH username: ')
-        password = input('SSH password: ')
+        ssh_username = input('SSH username: ')
+        ssh_password = input('SSH password: ')
 
     with SSHTunnelForwarder(('starbug.cs.rit.edu', 22),
-                            ssh_username=username,
-                            ssh_password=password,
+                            ssh_username=ssh_username,
+                            ssh_password=ssh_password,
                             remote_bind_address=('localhost', 5432)) as server:
         server.start()
         print('SSH tunnel established')
-        con = connect(database=DB_NAME, user=username, password=password,
+        con = connect(database=DB_NAME, user=ssh_username, password=ssh_password,
                       host='localhost', port=server.local_bind_port)
         print('Database connection established')
         con.autocommit = True
@@ -101,7 +101,7 @@ def main() -> None:
                 print('help             -  displays this menu')
                 print('quit             -  exits the program')
                 print(
-                    'tool [v a e d s]   -  manage your tools [view add edit delete search]')
+                    'tool [v a e d r s]   -  manage your tools [view add edit delete return search]')
                 print(
                     'categ [v a e d]  -  manage your categories [view add edit delete]')
                 print(
@@ -111,17 +111,8 @@ def main() -> None:
             elif command == 'tool':
                 if flags[0] == 'v':
                     inp = input(
-                        'Show all available, all borrowed, all lent, or all owned tools? (a/b/l/o): ').lower().strip()
-                    if inp == 'a':
-                        if not show_tools_available(cur, username):
-                            print('Error showing tools')
-                    elif inp == 'b':
-                        if not show_tools_borrowed(cur, username):
-                            print('Error showing tools')
-                    elif inp == 'l':
-                        if not show_tools_lent(cur, username):
-                            print('Error showing tools')
-                    elif inp == 'o':
+                        'Show all owned, all borrowed, all lent, or all available tools? (o/b/l/a): ').lower().strip()
+                    if inp == 'o':
                         by = input(
                             'Sort by category or name? (c/n): ').lower().strip()
                         if by in ('c', 'n'):
@@ -134,6 +125,15 @@ def main() -> None:
                                 print('Invalid input')
                         else:
                             print('Invalid input')
+                    elif inp == 'b':
+                        if not show_tools_borrowed(cur, username):
+                            print('Error showing tools')
+                    elif inp == 'l':
+                        if not show_tools_lent(cur, username):
+                            print('Error showing tools')
+                    elif inp == 'a':
+                        if not show_tools_available(cur, username):
+                            print('Error showing tools')
                     else:
                         print('Invalid input')
                 elif flags[0] == 'a':
@@ -168,7 +168,17 @@ def main() -> None:
                     elif res:
                         print('Tool deleted')
                     else:
-                        print('Tool is not owned by you, or does not exist')
+                        print(
+                            'Tool is not owned by you, or does not exist, or is lent out')
+                elif flags[0] == 'r':
+                    barcode = input('Barcode: ')
+                    res = return_tool(cur, username, barcode)
+                    if res is None:
+                        print('Error returning tool')
+                    elif res:
+                        print('Tool returned')
+                    else:
+                        print('Tool is not borrowed by you, or does not exist')
                 elif flags[0] == 's':
                     barcode = input('Tool barcode (enter to omit): ')
                     if barcode:
@@ -184,7 +194,7 @@ def main() -> None:
                 if flags[0] == 'v':
                     if not show_categs(cur, username):
                         print('Error showing categories')
-                elif flags[0] == 'a':
+                elif flags[0] == 'c':
                     name = input('Name of new category: ')
                     res = create_categ(cur, username, name)
                     if res is None:
@@ -242,13 +252,13 @@ def main() -> None:
                     if res is None:
                         print('Error deleting category')
                     elif res:
-                        print('Deleted successfully')
+                        print('Category deleted successfully')
                     else:
                         print('Category does not exist')
             elif command == 'req':
                 if flags[0] == 'g':
                     inp = input(
-                        'View, create or manage requests (v/c/m): ').lower().strip()
+                        'View, create or delete requests (v/c/d): ').lower().strip()
                     if inp == 'v':
                         if not show_reqs_given(cur, username):
                             print('Error showing requests')
@@ -264,19 +274,56 @@ def main() -> None:
                             print('Request created successfully')
                         else:
                             print(
-                                'Tool does not exist or is owned by you or is not shareable or is already lent out')
-                    elif inp == 'm':
-                        raise NotImplementedError
+                                'Tool does not exist or is owned by you or is not owned or is not shareable or is already lent out or is already/recently requested by you')
+                    elif inp == 'd':
+                        barcode = input('Tool barcode: ')
+                        request_date = input('Request date: ')
+                        res = delete_req(cur, username, barcode, request_date)
+                        if res is None:
+                            print('Error deleting request')
+                        elif res:
+                            print('Request deleted successfully')
+                        else:
+                            print(
+                                'Request does not exist or is not made by you or is not pending')
                     else:
                         print('Invalid input')
                 elif flags[0] == 'r':
                     inp = input(
-                        'View or manage requests (v/m): ').lower().strip()
+                        'View or resolve requests (v/r): ').lower().strip()
                     if inp == 'v':
                         if not show_reqs_received(cur, username):
                             print('Error showing requests')
-                    elif inp == 'm':
-                        raise NotImplementedError
+                    elif inp == 'r':
+                        req_username = input('User requesting: ')
+                        barcode = input('Tool barcode: ')
+                        request_date = input('Request date: ')
+                        decision = input(
+                            'Accept or reject (a/r): ').lower().strip()
+                        if decision == 'a':
+                            expected_return_date = input(
+                                'Expected return date: ')
+                            res = accept_req(
+                                cur, username, req_username, barcode, request_date, expected_return_date)
+                            if res is None:
+                                print('Error accepting request')
+                            elif res:
+                                print('Request accepted successfully')
+                            else:
+                                print(
+                                    'Request does not exist or is not pending or is not to you or tool is not shareable or return date is too soon')
+                        elif decision == 'r':
+                            res = reject_req(
+                                cur, username, req_username, barcode, request_date)
+                            if res is None:
+                                print('Error rejecting request')
+                            elif res:
+                                print('Request rejected successfully')
+                            else:
+                                print(
+                                    'Request does not exist or is not pending or is not to you')
+                        else:
+                            print('Invalid input')
                     else:
                         print('Invalid input')
 
