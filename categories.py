@@ -5,9 +5,10 @@ Description: File containing any functions that query the database to alter cate
 """
 
 
-from typing import Optional
 from psycopg2.errors import IntegrityError
 from psycopg2.extensions import cursor
+from typing import Optional
+
 from tools import show_tool
 
 

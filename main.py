@@ -9,8 +9,8 @@ Description: Implementation for a Python interface so that users may interact wi
 from configparser import ConfigParser
 from psycopg2 import connect
 from sshtunnel import SSHTunnelForwarder
-from categories import (add_categ_tool, create_categ, delete_categ,
-                        delete_categ_tool, edit_categ_name, show_categs)
+
+from categories import add_categ_tool, create_categ, delete_categ, delete_categ_tool, edit_categ_name, show_categs
 from login import create_user, login_user
 from requests import accept_req, create_req, delete_req, reject_req, show_reqs_given, show_reqs_received
 from search import search_tools_barcode, search_tools_name_categ
