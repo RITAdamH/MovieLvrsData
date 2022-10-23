@@ -25,9 +25,7 @@ add tool to category
 def add_categ_tool(cur: cursor, username: str, categ_name: str, tool_barcode: str) -> Optional[bool]:
     try:
         cur.execute(
-            f"insert into tool_categs(barcode, cid) values (select barcode from tools where username = '{username}' "
-            f"and barcode = '{tool_barcode}', (select cid from categories where username = '{username}' and name = '"
-            f"{categ_name}'))")
+            f"insert into tool_categs(barcode, cid) values ((select barcode from tools where username = '{username}' and barcode = '{tool_barcode}'), (select cid from categories where username = '{username}' and name = '{categ_name}'))")
     except IntegrityError:
         return False
     except:
@@ -140,13 +138,15 @@ def show_categs(cur: cursor, username: str) -> bool:
             print(
                 f'Your categories ({len(categs)}) [name ascending]:')
             for categ in categs:
+                cid, name, _ = categ
+
                 cur.execute(
-                    f"select * from tools where barcode in (select barcode from tool_categs where cid = {categ[0]}) order "
+                    f"select * from tools where barcode in (select barcode from tool_categs where cid = {cid}) order "
                     f"by name")
 
                 tools = cur.fetchall()
 
-                print(f'{categ[1]}:')
+                print(f'{name}:')
                 if not tools:
                     print('\tEmpty')
                 else:

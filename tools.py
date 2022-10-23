@@ -101,6 +101,8 @@ def show_tool(cur: cursor, username: str, tool: Tuple[str, str, Optional[str], O
     try:
         barcode, name, description, purchase_date, purchase_price, shareable, tool_username = tool
 
+        owned = tool_username == username
+
         start = '\t' if tab else ''
 
         print(start + '-' * 50)
@@ -110,7 +112,7 @@ def show_tool(cur: cursor, username: str, tool: Tuple[str, str, Optional[str], O
         if description is not None:
             print(start + f'"{description}"')
 
-        if tool_username == username:
+        if owned:
             print(start + 'Owned by you')
             if purchase_date is not None and purchase_price is not None:
                 print(
@@ -122,10 +124,9 @@ def show_tool(cur: cursor, username: str, tool: Tuple[str, str, Optional[str], O
 
         print(start + f'{"Shareable" if shareable else "Not shareable"}')
 
-        if show_categs:
+        if owned and show_categs:
             cur.execute(
-                f"select name from categories where username = '{username}' and cid in (select cid from tool_categs where "
-                f"barcode = '{barcode}') order by name")
+                f"select name from categories where cid in (select cid from tool_categs where barcode = '{barcode}') order by name")
 
             categs = cur.fetchall()
 

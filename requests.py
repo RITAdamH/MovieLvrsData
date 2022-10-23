@@ -32,7 +32,7 @@ def create_req(cur: cursor, username: str, barcode: str, date_required: str, dur
 def delete_req(cur: cursor, username: str, barcode: str, request_date: str) -> Optional[bool]:
     try:
         cur.execute(
-            f"update tool_reqs set status = 'Denied', last_status_change = current_timestamp where username = '{username}' and barcode = '{barcode}' and request_date = '{request_date}' and status = 'Pending'")
+            f"delete from tool_reqs where username = '{username}' and barcode = '{barcode}' and request_date = '{request_date}' and status = 'Pending'")
     except:
         return None
 
