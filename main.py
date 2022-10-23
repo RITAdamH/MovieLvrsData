@@ -66,7 +66,7 @@ def main() -> None:
                     print('Login successful')
                     logged_in = True
                 else:
-                    print('Incorrect login')
+                    print('Invalid login credentials')
             elif inp == 'new':
                 print('Creating user')
                 username = input('Username: ')
@@ -79,7 +79,7 @@ def main() -> None:
                 if res is None:
                     print('Error creating user')
                 elif res:
-                    print('User created')
+                    print('User created successfully')
                     logged_in = True
                 else:
                     print('Username or email already exists')
