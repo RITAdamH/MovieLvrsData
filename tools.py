@@ -6,8 +6,8 @@ Description: File containing any functions that query the database to interact w
 
 from datetime import date, datetime
 from decimal import Decimal
-from typing import Optional, Tuple
 from psycopg2.extensions import cursor
+from typing import Optional, Tuple
 
 
 """

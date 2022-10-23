@@ -56,8 +56,7 @@ def create_user(cur: cursor, username: str, password: str, fname: str, lname: st
             f"insert into users values ('{username}', '{hashpw(password.encode(), gensalt()).decode()}', '{fname}', '{lname}', '{email}')")
     except IntegrityError:
         return False
-    except Exception as e:
-        print(e)
+    except:
         return None
 
     return True

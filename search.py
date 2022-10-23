@@ -7,6 +7,7 @@ Description: File containing any functions that query the database to search for
 
 
 from psycopg2.extensions import cursor
+
 from tools import show_tool
 
 
