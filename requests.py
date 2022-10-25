@@ -47,7 +47,6 @@ create tool request
 
 def create_req(cur: cursor, username: str, barcode: str, date_required: str, duration: str) -> Optional[bool]:
     try:
-        # TODO: maybe refactor
         cur.execute(
             f"insert into tool_reqs (username, barcode, date_required, duration) values ('{username}', (select "
             f"barcode from tools where barcode = '{barcode}' and shareable and username != '{username}' and username "
@@ -112,7 +111,6 @@ show tool request
 
 def show_req(cur: cursor, req: Tuple[str, str, date, timedelta, str, Optional[datetime], Optional[date], Optional[date]]) -> None:
     try:
-        # TODO: add tool name
         username, barcode, request_date, date_required, duration, _, last_status_change, expected_return_date, date_returned = req
 
         cur.execute(f"select username from tools where barcode = '{barcode}'")
@@ -142,10 +140,8 @@ show requests given
 
 def show_reqs_given(cur: cursor, username: str) -> bool:
     try:
-        # TODO: order by tool name instead of barcode
         cur.execute(
-            f"select * from tool_reqs where username = '{username}' and status = 'Pending' order by barcode, "
-            f"request_date")
+            f"select * from tool_reqs where username = '{username}' and status = 'Pending' order by request_date, username")
 
         reqs = cur.fetchall()
 
@@ -153,7 +149,7 @@ def show_reqs_given(cur: cursor, username: str) -> bool:
             print('You have no outgoing requests')
         else:
             print(
-                f'Your outgoing requests ({len(reqs)}) [barcode ascending]:')
+                f'Your outgoing requests ({len(reqs)}) [request date ascending]:')
             for req in reqs:
                 show_req(cur, req)
     except:
@@ -172,10 +168,8 @@ show requests received
 
 def show_reqs_received(cur: cursor, username: str) -> bool:
     try:
-        # TODO: order by tool name instead of barcode
         cur.execute(
-            f"select * from tool_reqs where barcode in (select barcode from tools where username = '{username}') and "
-            f"status = 'Pending' order by barcode, request_date")
+            f"select * from tool_reqs where barcode in (select barcode from tools where username = '{username}') and status = 'Pending' order by request_date, username")
 
         reqs = cur.fetchall()
 
@@ -183,7 +177,7 @@ def show_reqs_received(cur: cursor, username: str) -> bool:
             print('You have no incoming requests')
         else:
             print(
-                f'Your incoming requests ({len(reqs)}) [barcode ascending]:')
+                f'Your incoming requests ({len(reqs)}) [request date ascending]:')
             for req in reqs:
                 show_req(cur, req)
     except:
