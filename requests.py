@@ -18,7 +18,6 @@ def accept_req(cur: cursor, username: str, req_username: str, barcode: str, requ
 
 def create_req(cur: cursor, username: str, barcode: str, date_required: str, duration: str) -> Optional[bool]:
     try:
-        # TODO: maybe refactor
         cur.execute(
             f"insert into tool_reqs (username, barcode, date_required, duration) values ('{username}', (select barcode from tools where barcode = '{barcode}' and shareable and username != '{username}' and username is not null and barcode not in (select barcode from tool_reqs where status != 'Accepted' or date_returned is not null)), '{date_required}', '{duration}')")
     except IntegrityError:
@@ -73,9 +72,8 @@ def show_req(cur: cursor, req: Tuple[str, str, date, timedelta, str, Optional[da
 
 def show_reqs_given(cur: cursor, username: str) -> bool:
     try:
-        # TODO: order by tool name instead of barcode
         cur.execute(
-            f"select * from tool_reqs where username = '{username}' and status = 'Pending' order by barcode, request_date")
+            f"select * from tool_reqs where username = '{username}' and status = 'Pending' order by request_date, username")
 
         reqs = cur.fetchall()
 
@@ -83,7 +81,7 @@ def show_reqs_given(cur: cursor, username: str) -> bool:
             print('You have no outgoing requests')
         else:
             print(
-                f'Your outgoing requests ({len(reqs)}) [barcode ascending]:')
+                f'Your outgoing requests ({len(reqs)}) [request date ascending]:')
             for req in reqs:
                 show_req(cur, req)
     except:
@@ -94,9 +92,8 @@ def show_reqs_given(cur: cursor, username: str) -> bool:
 
 def show_reqs_received(cur: cursor, username: str) -> bool:
     try:
-        # TODO: order by tool name instead of barcode
         cur.execute(
-            f"select * from tool_reqs where barcode in (select barcode from tools where username = '{username}') and status = 'Pending' order by barcode, request_date")
+            f"select * from tool_reqs where barcode in (select barcode from tools where username = '{username}') and status = 'Pending' order by request_date, username")
 
         reqs = cur.fetchall()
 
@@ -104,7 +101,7 @@ def show_reqs_received(cur: cursor, username: str) -> bool:
             print('You have no incoming requests')
         else:
             print(
-                f'Your incoming requests ({len(reqs)}) [barcode ascending]:')
+                f'Your incoming requests ({len(reqs)}) [request date ascending]:')
             for req in reqs:
                 show_req(cur, req)
     except:
