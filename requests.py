@@ -50,7 +50,6 @@ def reject_req(cur: cursor, username: str, req_username: str, barcode: str, requ
 
 def show_req(cur: cursor, req: Tuple[str, str, date, timedelta, str, Optional[datetime], Optional[date], Optional[date]]) -> None:
     try:
-        # TODO: add tool name
         username, barcode, request_date, date_required, duration, _, last_status_change, expected_return_date, date_returned = req
 
         cur.execute(f"select username from tools where barcode = '{barcode}'")
