@@ -269,7 +269,7 @@ def main() -> None:
                             print('Error showing requests')
                     elif inp == 'c':
                         barcode = input('Tool barcode: ')
-                        date_required = input('Date required: ')
+                        date_required = input('Date tools is required: ')
                         duration = input('Duration: ')
                         res = create_req(cur, username, barcode,
                                          date_required, duration)
