@@ -5,6 +5,7 @@ Description: File containing any functions that query the database to log
 a user in, or create a new user
 """
 
+
 from bcrypt import checkpw, gensalt, hashpw
 from psycopg2.errors import IntegrityError
 from psycopg2.extensions import cursor

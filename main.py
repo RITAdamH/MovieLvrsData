@@ -9,7 +9,6 @@ Description: Implementation for a Python interface so that users may interact wi
 from configparser import ConfigParser
 from psycopg2 import connect
 from sshtunnel import SSHTunnelForwarder
-
 from categories import add_categ_tool, create_categ, delete_categ, delete_categ_tool, edit_categ_name, show_categs
 from login import create_user, login_user
 from requests import accept_req, create_req, delete_req, reject_req, show_reqs_given, show_reqs_received
@@ -25,6 +24,12 @@ COMMAND_FLAGS = {
 }
 
 DB_NAME = 'p32001_17'
+
+
+"""
+main engine for the program
+@return None
+"""
 
 
 def main() -> None:
@@ -274,7 +279,8 @@ def main() -> None:
                             print('Request created successfully')
                         else:
                             print(
-                                'Tool does not exist or is owned by you or is not owned or is not shareable or is already lent out or is already/recently requested by you')
+                                'Tool does not exist or is owned by you or is not owned or is not shareable or is '
+                                'already lent out or is already/recently requested by you')
                     elif inp == 'd':
                         barcode = input('Tool barcode: ')
                         request_date = input('Request date: ')
@@ -311,7 +317,8 @@ def main() -> None:
                                 print('Request accepted successfully')
                             else:
                                 print(
-                                    'Request does not exist or is not pending or is not to you or tool is not shareable or return date is too soon')
+                                    'Request does not exist or is not pending or is not to you or tool is not '
+                                    'shareable or return date is too soon')
                         elif decision == 'r':
                             res = reject_req(
                                 cur, username, req_username, barcode, request_date)

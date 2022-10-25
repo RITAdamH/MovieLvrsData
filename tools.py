@@ -4,6 +4,7 @@ Author: Patrick Johnson
 Description: File containing any functions that query the database to interact with tools
 """
 
+
 from datetime import date, datetime
 from decimal import Decimal
 from psycopg2.extensions import cursor
@@ -76,6 +77,15 @@ def remove_tool(cur: cursor, username: str, barcode: str) -> Optional[bool]:
     return True
 
 
+"""
+return tool
+@param cur: the cursor to the database
+@param username: the users username
+@param barcode: the barcode of the tool
+@return True if execution successful, False if integrity error (user error), None if other error
+"""
+
+
 def return_tool(cur: cursor, username: str, barcode: str) -> Optional[bool]:
     try:
         cur.execute(
@@ -126,7 +136,8 @@ def show_tool(cur: cursor, username: str, tool: Tuple[str, str, Optional[str], O
 
         if owned and show_categs:
             cur.execute(
-                f"select name from categories where cid in (select cid from tool_categs where barcode = '{barcode}') order by name")
+                f"select name from categories where cid in (select cid from tool_categs where barcode = '{barcode}') "
+                f"order by name")
 
             categs = cur.fetchall()
 
@@ -135,7 +146,10 @@ def show_tool(cur: cursor, username: str, tool: Tuple[str, str, Optional[str], O
                     start + f'Categories: {", ".join(name for name, in categs)}')
 
         cur.execute(
-            f"select tool_reqs.username, tool_reqs.last_status_change, tool_reqs.expected_return_date from tool_reqs, tools where tool_reqs.barcode = tools.barcode and tool_reqs.barcode = '{barcode}' and (tool_reqs.username = '{username}' or tools.username = '{username}') and tool_reqs.status = 'Accepted' and tool_reqs.date_returned is null")
+            f"select tool_reqs.username, tool_reqs.last_status_change, tool_reqs.expected_return_date from tool_reqs, "
+            f"tools where tool_reqs.barcode = tools.barcode and tool_reqs.barcode = '{barcode}' and ("
+            f"tool_reqs.username = '{username}' or tools.username = '{username}') and tool_reqs.status = 'Accepted' "
+            f"and tool_reqs.date_returned is null")
 
         borrows = cur.fetchone()
 
@@ -157,10 +171,19 @@ def show_tool(cur: cursor, username: str, tool: Tuple[str, str, Optional[str], O
         print('Error showing tool')
 
 
+"""
+show available tools
+@param cur: the cursor to the database
+@param username: the users username
+@return True if execution successful, False if integrity error (user error)
+"""
+
+
 def show_tools_available(cur: cursor, username: str) -> bool:
     try:
         cur.execute(
-            f"select * from tools where shareable and username != '{username}' and barcode not in (select barcode from tool_reqs where status != 'Accepted' or date_returned is not null) order by name")
+            f"select * from tools where shareable and username != '{username}' and barcode not in (select barcode "
+            f"from tool_reqs where status != 'Accepted' or date_returned is not null) order by name")
 
         tools = cur.fetchall()
 
@@ -187,7 +210,9 @@ show borrowed tools
 def show_tools_borrowed(cur: cursor, username: str) -> bool:
     try:
         cur.execute(
-            f"select tools.* from tools, tool_reqs where tools.barcode = tool_reqs.barcode and tools.barcode in (select barcode from tool_reqs where username = '{username}' and status = 'Accepted' and date_returned is null) order by tool_reqs.last_status_change, tools.name")
+            f"select tools.* from tools, tool_reqs where tools.barcode = tool_reqs.barcode and tools.barcode in ("
+            f"select barcode from tool_reqs where username = '{username}' and status = 'Accepted' and date_returned "
+            f"is null) order by tool_reqs.last_status_change, tools.name")
 
         tools = cur.fetchall()
 
@@ -205,7 +230,7 @@ def show_tools_borrowed(cur: cursor, username: str) -> bool:
 
 
 """
-show tools lent
+show lent tools
 @param cur: the cursor to the database
 @param username: the users username
 @return True if execution successful, False if integrity error (user error)
@@ -232,7 +257,7 @@ def show_tools_lent(cur: cursor, username: str) -> bool:
 
 
 """
-show tools owned
+show owned tools
 @param cur: the cursor to the database
 @param username: the users username
 @param by: the attribute in which to order the tools
