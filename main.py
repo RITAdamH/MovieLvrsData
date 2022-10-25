@@ -108,7 +108,7 @@ def main() -> None:
                 print(
                     'tool [v a e d r s]   -  manage your tools [view add edit delete return search]')
                 print(
-                    'categ [v c e d]  -  manage your categories [view add edit delete]')
+                    'categ [v c e d]  -  manage your categories [view create edit delete]')
                 print(
                     'req [g r]       -  manage your borrow requests [given received]')
             elif command == 'quit':
