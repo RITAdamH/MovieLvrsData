@@ -245,7 +245,7 @@ show lent tools
 def show_tools_lent(cur: cursor, username: str) -> bool:
     try:
         cur.execute(
-            f"select disctinct tools.* from tools, tool_reqs where tools.barcode = tool_reqs.barcode and tools.username = '{username}' and tools.barcode in (select barcode from tool_reqs where status = 'Accepted' and date_returned is null) order by tool_reqs.last_status_change, tools.name")
+            f"select tools.* from tools, tool_reqs where tools.barcode = tool_reqs.barcode and tools.username = '{username}' and tool_reqs.status = 'Accepted' and tool_reqs.date_returned is null order by tool_reqs.last_status_change, tools.name")
 
         tools = cur.fetchall()
 
