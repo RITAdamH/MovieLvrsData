@@ -62,7 +62,7 @@ remove tool
 def remove_tool(cur: cursor, username: str, barcode: str) -> Optional[bool]:
     try:
         cur.execute(
-            f"update tools set username = null from tool_reqs where tools.username = '{username}' and tools.barcode = '{barcode}' and (tool_reqs.status != 'Accepted' or tool_reqs.date_returned is not null)")
+            f"update tools set username = null and shareable = true from tool_reqs where tools.username = '{username}' and tools.barcode = '{barcode}' and (tool_reqs.status != 'Accepted' or tool_reqs.date_returned is not null)")
 
         if cur.rowcount == 0:
             return False
@@ -122,17 +122,22 @@ def show_tool(cur: cursor, username: str, tool: Tuple[str, str, Optional[str], O
         if description is not None:
             print(start + f'"{description}"')
 
-        if owned:
-            print(start + 'Owned by you')
-            if purchase_date is not None and purchase_price is not None:
-                print(
-                    start + f'Purchased on {purchase_date} (${purchase_price:.2f})')
-            elif purchase_date is not None:
-                print(start + f'Purchased on {purchase_date}')
-            elif purchase_price is not None:
-                print(start + f'${purchase_price:.2f}')
+        if tool_username is not None:
+            if owned:
+                print(start + 'Owned by you')
+                if purchase_date is not None and purchase_price is not None:
+                    print(
+                        start + f'Purchased on {purchase_date} (${purchase_price:.2f})')
+                elif purchase_date is not None:
+                    print(start + f'Purchased on {purchase_date}')
+                elif purchase_price is not None:
+                    print(start + f'${purchase_price:.2f}')
+            else:
+                print(start + f'Owned by {tool_username}')
 
-        print(start + f'{"Shareable" if shareable else "Not shareable"}')
+            print(start + f'{"Shareable" if shareable else "Not shareable"}')
+        else:
+            print(start + f'Not owned')
 
         if owned and show_categs:
             cur.execute(
@@ -240,7 +245,7 @@ show lent tools
 def show_tools_lent(cur: cursor, username: str) -> bool:
     try:
         cur.execute(
-            f"select tools.* from tools, tool_reqs where tools.barcode = tool_reqs.barcode and tools.username = '{username}' and tools.barcode in (select barcode from tool_reqs where status = 'Accepted' and date_returned is null) order by tool_reqs.last_status_change, tools.name")
+            f"select disctinct tools.* from tools, tool_reqs where tools.barcode = tool_reqs.barcode and tools.username = '{username}' and tools.barcode in (select barcode from tool_reqs where status = 'Accepted' and date_returned is null) order by tool_reqs.last_status_change, tools.name")
 
         tools = cur.fetchall()
 
