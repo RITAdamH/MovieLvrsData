@@ -50,7 +50,7 @@ def create_req(cur: cursor, username: str, barcode: str, date_required: str, dur
         cur.execute(
             f"insert into tool_reqs (username, barcode, date_required, duration) values ('{username}', (select "
             f"barcode from tools where barcode = '{barcode}' and shareable and username != '{username}' and username "
-            f"is not null and barcode not in (select barcode from tool_reqs where status != 'Accepted' or "
+            f"is not null and barcode in (select barcode from tool_reqs where status != 'Accepted' or "
             f"date_returned is not null)), '{date_required}', '{duration}')")
     except IntegrityError:
         return False
