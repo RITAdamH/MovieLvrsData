@@ -215,9 +215,7 @@ show borrowed tools
 def show_tools_borrowed(cur: cursor, username: str) -> bool:
     try:
         cur.execute(
-            f"select tools.* from tools, tool_reqs where tools.barcode = tool_reqs.barcode and tools.barcode in ("
-            f"select barcode from tool_reqs where username = '{username}' and status = 'Accepted' and date_returned "
-            f"is null) order by tool_reqs.last_status_change, tools.name")
+            f"select tools.* from tools, tool_reqs where tools.barcode = tool_reqs.barcode and tool_reqs.username = '{username}' and tool_reqs.status = 'Accepted' and tool_reqs.date_returned is null order by tool_reqs.last_status_change, tools.name")
 
         tools = cur.fetchall()
 
