@@ -153,7 +153,6 @@ def show_categs(cur: cursor, username: str) -> bool:
                         show_tool(cur, username, tool,
                                   show_categs=False, tab=True)
 
-                print()
     except:
         return False
 

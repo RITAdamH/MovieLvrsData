@@ -103,14 +103,14 @@ def main() -> None:
                 print('Invalid usage - see "help"')
             elif command == 'help':
                 print('Commands:')
-                print('help             -  displays this menu')
-                print('quit             -  exits the program')
+                print('help                -  displays this menu')
+                print('quit                -  exits the program')
                 print(
-                    'tool [v a e d r s]   -  manage your tools [view add edit delete return search]')
+                    'tool [v a e d r s]  -  manage your tools [view add edit delete return search]')
                 print(
-                    'categ [v c e d]  -  manage your categories [view create edit delete]')
+                    'categ [v c e d]     -  manage your categories [view create edit delete]')
                 print(
-                    'req [g r]       -  manage your borrow requests [given received]')
+                    'req [g r]           -  manage your borrow requests [given received]')
             elif command == 'quit':
                 break
             elif command == 'tool':
