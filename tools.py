@@ -141,7 +141,7 @@ def show_tool(cur: cursor, username: str, tool: Tuple[str, str, Optional[str], O
 
         if owned and show_categs:
             cur.execute(
-                f"select name from categories where cid in (select cid from tool_categs where barcode = '{barcode}') "
+                f"select name from categories where username = '{username}' and cid in (select cid from tool_categs where barcode = '{barcode}') "
                 f"order by name")
 
             categs = cur.fetchall()
