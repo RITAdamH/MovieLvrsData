@@ -127,11 +127,11 @@ def show_tool(cur: cursor, username: str, tool: Tuple[str, str, Optional[str], O
                 print(start + 'Owned by you')
                 if purchase_date is not None and purchase_price is not None:
                     print(
-                        start + f'Purchased on {purchase_date} (${purchase_price:.2f})')
+                        start + f'Purchased on {purchase_date} (${purchase_price:,.2f})')
                 elif purchase_date is not None:
                     print(start + f'Purchased on {purchase_date}')
                 elif purchase_price is not None:
-                    print(start + f'${purchase_price:.2f}')
+                    print(start + f'${purchase_price:,.2f}')
             else:
                 print(start + f'Owned by {tool_username}')
 
