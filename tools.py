@@ -188,7 +188,7 @@ def show_tools_available(cur: cursor, username: str) -> bool:
     try:
         cur.execute(
             f"select * from tools where shareable and username != '{username}' and barcode not in (select barcode "
-            f"from tool_reqs where status != 'Accepted' or date_returned is not null) order by name")
+            f"from tool_reqs where status != 'Accepted' or date_returned is not null) order by name, barcode")
 
         tools = cur.fetchall()
 
@@ -215,7 +215,7 @@ show borrowed tools
 def show_tools_borrowed(cur: cursor, username: str) -> bool:
     try:
         cur.execute(
-            f"select tools.* from tools, tool_reqs where tools.barcode = tool_reqs.barcode and tool_reqs.username = '{username}' and tool_reqs.status = 'Accepted' and tool_reqs.date_returned is null order by tool_reqs.last_status_change, tools.name")
+            f"select tools.* from tools, tool_reqs where tools.barcode = tool_reqs.barcode and tool_reqs.username = '{username}' and tool_reqs.status = 'Accepted' and tool_reqs.date_returned is null order by tool_reqs.last_status_change, tools.name, tools.barcode")
 
         tools = cur.fetchall()
 
@@ -243,7 +243,7 @@ show lent tools
 def show_tools_lent(cur: cursor, username: str) -> bool:
     try:
         cur.execute(
-            f"select tools.* from tools, tool_reqs where tools.barcode = tool_reqs.barcode and tools.username = '{username}' and tool_reqs.status = 'Accepted' and tool_reqs.date_returned is null order by tool_reqs.last_status_change, tools.name")
+            f"select tools.* from tools, tool_reqs where tools.barcode = tool_reqs.barcode and tools.username = '{username}' and tool_reqs.status = 'Accepted' and tool_reqs.date_returned is null order by tool_reqs.last_status_change, tools.name, tools.barcode")
 
         tools = cur.fetchall()
 
@@ -273,12 +273,12 @@ def show_tools_owned(cur: cursor, username: str, by: str, ord: str) -> bool:
     try:
         if by == 'n':
             cur.execute(
-                f"select * from tools where username = '{username}' order by name {'asc' if ord == 'a' else 'desc'}")
+                f"select * from tools where username = '{username}' order by name {'asc' if ord == 'a' else 'desc'}, barcode")
         else:
             cur.execute(
                 f"select * from tools where username = '{username}' order by (select min(name) from categories where "
                 f"username = '{username}' and cid in (select cid from tool_categs where barcode = tools.barcode)) "
-                f"{'asc' if ord == 'a' else 'desc'} nulls last, name")
+                f"{'asc' if ord == 'a' else 'desc'} nulls last, name, barcode")
 
         tools = cur.fetchall()
 

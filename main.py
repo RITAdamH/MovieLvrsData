@@ -280,7 +280,7 @@ def main() -> None:
                         else:
                             print(
                                 'Tool does not exist or is owned by you or is not owned or is not shareable or is '
-                                'already lent out or is already/recently requested by you')
+                                'already lent out or is recently requested by you or duration is not long enough')
                     elif inp == 'd':
                         barcode = input('Tool barcode: ')
                         request_date = input('Request date: ')

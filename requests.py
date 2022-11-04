@@ -119,7 +119,8 @@ def show_req(cur: cursor, req: Tuple[str, str, date, date, timedelta, str, Optio
 
         print('-' * 50)
         print(f'{username} -> {username_to} [{barcode}] ({request_date})')
-        print(f'Required by {date_required:%B %d, %Y} for {duration}')
+        print(
+            f'Required by {date_required:%B %d, %Y} for {duration.days} day(s)')
         print('-' * 50)
     except:
         print('Error showing request')
@@ -136,7 +137,7 @@ show requests given
 def show_reqs_given(cur: cursor, username: str) -> bool:
     try:
         cur.execute(
-            f"select * from tool_reqs where username = '{username}' and status = 'Pending' order by request_date, username")
+            f"select * from tool_reqs where username = '{username}' and status = 'Pending' order by request_date, username, barcode")
 
         reqs = cur.fetchall()
 
@@ -164,7 +165,7 @@ show requests received
 def show_reqs_received(cur: cursor, username: str) -> bool:
     try:
         cur.execute(
-            f"select * from tool_reqs where barcode in (select barcode from tools where username = '{username}') and status = 'Pending' order by request_date, username")
+            f"select * from tool_reqs where barcode in (select barcode from tools where username = '{username}') and status = 'Pending' order by request_date, username, barcode")
 
         reqs = cur.fetchall()
 

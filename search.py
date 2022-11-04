@@ -52,10 +52,10 @@ def search_tools_name_categ(cur: cursor, username: str, name: str, categ: str) -
             cur.execute(
                 f"select * from tools where lower(name) like '%{name}%' and barcode in (select barcode from "
                 f"tool_categs where cid in (select cid from categories where username = '{username}' and lower(name) "
-                f"like '%{categ}%')) order by name")
+                f"like '%{categ}%')) order by name, barcode")
         else:
             cur.execute(
-                f"select * from tools where lower(name) like '%{name}%' order by name")
+                f"select * from tools where lower(name) like '%{name}%' order by name, barcode")
 
         tools = cur.fetchall()
 
