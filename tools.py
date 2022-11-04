@@ -127,9 +127,9 @@ def show_tool(cur: cursor, username: str, tool: Tuple[str, str, Optional[str], O
                 print(start + 'Owned by you')
                 if purchase_date is not None and purchase_price is not None:
                     print(
-                        start + f'Purchased on {purchase_date} (${purchase_price:,.2f})')
+                        start + f'Purchased on {purchase_date:%B %d, %Y} (${purchase_price:,.2f})')
                 elif purchase_date is not None:
-                    print(start + f'Purchased on {purchase_date}')
+                    print(start + f'Purchased on {purchase_date:%B %d, %Y}')
                 elif purchase_price is not None:
                     print(start + f'${purchase_price:,.2f}')
             else:
@@ -159,14 +159,14 @@ def show_tool(cur: cursor, username: str, tool: Tuple[str, str, Optional[str], O
         borrows = cur.fetchone()
 
         if borrows is not None:
-            borrow_username, date, expected_return_date = borrows
+            borrow_username, borrow_date, expected_return_date = borrows
 
             if borrow_username == username:
                 print(
-                    start + f'Borrowing from {tool_username} since {date.date()} (expected back {expected_return_date})')
+                    start + f'Borrowing from {tool_username} since {borrow_date:%B %d, %Y} (expected back {expected_return_date:%B %d, %Y})')
             else:
                 print(
-                    start + f'Borrowed by {borrow_username} since {date.date()} (expected back {expected_return_date})')
+                    start + f'Borrowed by {borrow_username} since {borrow_date:%B %d, %Y} (expected back {expected_return_date:%B %d, %Y})')
 
             if datetime.now().date() > expected_return_date:
                 print(start + 'OVERDUE')

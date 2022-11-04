@@ -26,7 +26,7 @@ accept tool request
 def accept_req(cur: cursor, username: str, req_username: str, barcode: str, request_date: str, expected_return_date: str) -> Optional[bool]:
     try:
         cur.execute(
-            f"update tool_reqs set status = 'Accepted', last_status_change = current_timestamp, expected_return_date = '{expected_return_date}' where username = '{req_username}' and barcode = '{barcode}' and request_date = '{request_date}' and status = 'Pending' and barcode in (select barcode from tools where username = '{username}' and shareable)")
+            f"update tool_reqs set status = 'Accepted', last_status_change = current_date, expected_return_date = '{expected_return_date}' where username = '{req_username}' and barcode = '{barcode}' and request_date = '{request_date}' and status = 'Pending' and barcode in (select barcode from tools where username = '{username}' and shareable)")
     except IntegrityError:
         return False
     except:
@@ -94,7 +94,7 @@ reject tool request
 def reject_req(cur: cursor, username: str, req_username: str, barcode: str, request_date: str) -> Optional[bool]:
     try:
         cur.execute(
-            f"update tool_reqs set status = 'Denied', last_status_change = current_timestamp where username = '{req_username}' and barcode = '{barcode}' and request_date = '{request_date}' and status = 'Pending' and barcode in (select barcode from tools where username = '{username}')")
+            f"update tool_reqs set status = 'Denied', last_status_change = current_date where username = '{req_username}' and barcode = '{barcode}' and request_date = '{request_date}' and status = 'Pending' and barcode in (select barcode from tools where username = '{username}')")
     except:
         return None
 
@@ -109,9 +109,9 @@ show tool request
 """
 
 
-def show_req(cur: cursor, req: Tuple[str, str, date, timedelta, str, Optional[datetime], Optional[date], Optional[date]]) -> None:
+def show_req(cur: cursor, req: Tuple[str, str, date, date, timedelta, str, Optional[datetime], Optional[date], Optional[date]]) -> None:
     try:
-        username, barcode, request_date, date_required, duration, _, last_status_change, expected_return_date, date_returned = req
+        username, barcode, request_date, date_required, duration, _, _, _, _ = req
 
         cur.execute(f"select username from tools where barcode = '{barcode}'")
 
@@ -119,12 +119,7 @@ def show_req(cur: cursor, req: Tuple[str, str, date, timedelta, str, Optional[da
 
         print('-' * 50)
         print(f'{username} -> {username_to} [{barcode}] ({request_date})')
-        print(f'Required by {date_required} for {duration}')
-        print(
-            f'Last updated: {last_status_change if last_status_change else "N/A"}')
-        print(
-            f'Expected return: {expected_return_date if expected_return_date else "N/A"}')
-        print(f'Returned: {date_returned if date_returned else "N/A"}')
+        print(f'Required by {date_required:%B %d, %Y} for {duration}')
         print('-' * 50)
     except:
         print('Error showing request')
