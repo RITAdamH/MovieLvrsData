@@ -21,6 +21,7 @@ COMMAND_FLAGS = {
     'tool': ('v', 'a', 'e', 'd', 'r', 's'),
     'categ': ('v', 'c', 'e', 'd'),
     'req': ('g', 'r'),
+    'stat': ('d', 'l', 'b')
 }
 
 DB_NAME = 'p32001_17'
@@ -99,7 +100,7 @@ def main() -> None:
             command, *flags = inp.split()
             if command not in COMMAND_FLAGS:
                 print('Unknown command - see "help"')
-            elif bool(flags) != bool(COMMAND_FLAGS[command]) or flags and flags[0] not in COMMAND_FLAGS[command]:
+            elif bool(flags) != bool(COMMAND_FLAGS[command]) or len(flags) > 1 or flags and flags[0] not in COMMAND_FLAGS[command]:
                 print('Invalid usage - see "help"')
             elif command == 'help':
                 print('Commands:')
@@ -111,6 +112,8 @@ def main() -> None:
                     'categ [v c e d]     -  manage your categories [view create edit delete]')
                 print(
                     'req [g r]           -  manage your borrow requests [given received]')
+                print(
+                    'stat [d l b]       -  show statistics [dashboard lent borrowed]')
             elif command == 'quit':
                 break
             elif command == 'tool':
@@ -333,6 +336,13 @@ def main() -> None:
                             print('Invalid input')
                     else:
                         print('Invalid input')
+            elif command == 'stat':
+                if flags[0] == 'd':
+                    raise NotImplementedError
+                elif flags[0] == 'l':
+                    raise NotImplementedError
+                elif flags[0] == 'b':
+                    raise NotImplementedError
 
         print('Thanks for trusting Mvie Lovers!')
         con.close()
