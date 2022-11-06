@@ -100,7 +100,7 @@ def main() -> None:
             command, *flags = inp.split()
             if command not in COMMAND_FLAGS:
                 print('Unknown command - see "help"')
-            elif bool(flags) != bool(COMMAND_FLAGS[command]) or len(flags) > 1 or flags and flags[0] not in COMMAND_FLAGS[command]:
+            elif len(flags) > 1 or bool(flags) != bool(COMMAND_FLAGS[command]) or flags and flags[0] not in COMMAND_FLAGS[command]:
                 print('Invalid usage - see "help"')
             elif command == 'help':
                 print('Commands:')
