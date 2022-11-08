@@ -68,7 +68,7 @@ def show_most_lent(cur: cursor, username: str) -> bool:
             for i, tool_lent_stats in enumerate(tools_lent_stats):
                 *tool, days_lent, days_owned, avg_days_lent, lent_pct = tool_lent_stats
                 print(
-                    f'#{i + 1}. {lent_pct:.2%} - lent for {days_lent}/{days_owned} day(s) owned ({avg_days_lent:.2f} day(s) on avg)')
+                    f'#{i + 1}. {lent_pct:.2%} - lent for {days_lent}/{days_owned} day(s) ({avg_days_lent:.2f} day(s) avg.)')
                 show_tool(cur, username, tool)
     except:
         return False
