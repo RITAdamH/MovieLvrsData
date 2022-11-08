@@ -13,7 +13,7 @@ from categories import add_categ_tool, create_categ, delete_categ, delete_categ_
 from login import create_user, login_user
 from requests import accept_req, create_req, delete_req, reject_req, show_reqs_given, show_reqs_received
 from search import search_tools_barcode, search_tools_name_categ
-from stats import show_dashboard
+from stats import show_dashboard, show_most_borrowed, show_most_lent
 from tools import add_tool, edit_tool, remove_tool, return_tool, show_tools_available, show_tools_borrowed, show_tools_lent, show_tools_owned
 
 COMMAND_FLAGS = {
@@ -342,9 +342,11 @@ def main() -> None:
                     if not show_dashboard(cur, username):
                         print('Error showing dashboard')
                 elif flags[0] == 'l':
-                    raise NotImplementedError
+                    if not show_most_lent(cur, username):
+                        print('Error showing most lent tools')
                 elif flags[0] == 'b':
-                    raise NotImplementedError
+                    if not show_most_borrowed(cur, username):
+                        print('Error showing most borrowed tools')
 
         print('Thanks for trusting Mvie Lovers!')
         con.close()

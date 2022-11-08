@@ -26,3 +26,11 @@ def show_dashboard(cur: cursor, username: str) -> bool:
         return False
 
     return True
+
+
+def show_most_borrowed(cur: cursor, username: str) -> bool:
+    raise NotImplementedError
+
+
+def show_most_lent(cur: cursor, username: str) -> bool:
+    raise NotImplementedError
