@@ -26,9 +26,9 @@ def login_user(cur: cursor, username: str, password: str) -> Optional[bool]:
         cur.execute(
             f"select password_hash from users where username = '{username}'")
 
-        password_hash, = cur.fetchone()
+        password_hash = cur.fetchone()
 
-        if password_hash is None or not checkpw(password.encode(), password_hash.encode()):
+        if password_hash is None or not checkpw(password.encode(), password_hash[0].encode()):
             return False
 
         cur.execute(
