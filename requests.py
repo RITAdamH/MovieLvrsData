@@ -5,10 +5,11 @@ Description: File containing any functions that query the database to request to
 """
 
 
-from datetime import date, datetime, timedelta
 from psycopg2.errors import IntegrityError
 from psycopg2.extensions import cursor
 from typing import List, Optional, Tuple
+
+from constants import Tool_Request
 
 
 """
@@ -114,7 +115,7 @@ show tool request
 """
 
 
-def show_req(cur: cursor, req: Tuple[str, str, date, date, timedelta, str, Optional[datetime], Optional[date], Optional[date]]) -> None:
+def show_req(cur: cursor, req: Tool_Request) -> None:
     try:
         username, barcode, request_date, date_required, duration, _, _, _, _ = req
 

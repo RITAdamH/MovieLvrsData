@@ -5,11 +5,12 @@ Description: File containing any functions that query the database to interact w
 """
 
 
-from datetime import date, datetime
-from decimal import Decimal
+from datetime import datetime
+from typing_extensions import Unpack
 from psycopg2.extensions import cursor
-from typing import Optional, Tuple
+from typing import List, Optional, Tuple
 
+from constants import Tool
 
 """
 add tool
@@ -96,7 +97,7 @@ def return_tool(cur: cursor, username: str, barcode: str) -> Optional[bool]:
     return cur.rowcount > 0
 
 
-def show_also_borrowed(cur: cursor, username: str, tools_similar_borrows: Tuple[str, str, Optional[str], Optional[date], Optional[Decimal], bool, Optional[str], int]) -> None:
+def show_also_borrowed(cur: cursor, username: str, tools_similar_borrows: List[Tuple[Unpack[Tool], int]]) -> None:
     if tools_similar_borrows:
         print(
             f'Tools also borrowed ({len(tools_similar_borrows)}) [similarity descending]:')
@@ -116,7 +117,7 @@ show tool
 """
 
 
-def show_tool(cur: cursor, username: str, tool: Tuple[str, str, Optional[str], Optional[date], Optional[Decimal], bool, Optional[str]], show_categs: bool = True, tab: bool = False) -> None:
+def show_tool(cur: cursor, username: str, tool: Tool, show_categs: bool = True, tab: bool = False) -> None:
     try:
         barcode, name, description, purchase_date, purchase_price, shareable, tool_username = tool
 
