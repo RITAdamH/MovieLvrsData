@@ -100,7 +100,7 @@ def return_tool(cur: cursor, username: str, barcode: str) -> Optional[bool]:
 def show_also_borrowed(cur: cursor, username: str, tools_similar_borrows: List[Tuple[Unpack[TOOL], int]]) -> None:
     if tools_similar_borrows:
         print(
-            f'Tools also borrowed ({len(tools_similar_borrows)}) [similarity descending]:')
+            f'People also borrowed:')
         for tool_similar_borrows in tools_similar_borrows:
             *tool, _ = tool_similar_borrows
             show_tool(cur, username, tool)
