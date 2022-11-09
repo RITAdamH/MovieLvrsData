@@ -9,7 +9,7 @@ from psycopg2.errors import IntegrityError
 from psycopg2.extensions import cursor
 from typing import List, Optional, Tuple
 
-from constants import Tool_Request
+from constants import TOOL_REQUEST
 
 
 """
@@ -115,7 +115,7 @@ show tool request
 """
 
 
-def show_req(cur: cursor, req: Tool_Request) -> None:
+def show_req(cur: cursor, req: TOOL_REQUEST) -> None:
     try:
         username, barcode, request_date, date_required, duration, _, _, _, _ = req
 

@@ -10,7 +10,7 @@ from typing_extensions import Unpack
 from psycopg2.extensions import cursor
 from typing import List, Optional, Tuple
 
-from constants import Tool
+from constants import TOOL
 
 """
 add tool
@@ -97,7 +97,7 @@ def return_tool(cur: cursor, username: str, barcode: str) -> Optional[bool]:
     return cur.rowcount > 0
 
 
-def show_also_borrowed(cur: cursor, username: str, tools_similar_borrows: List[Tuple[Unpack[Tool], int]]) -> None:
+def show_also_borrowed(cur: cursor, username: str, tools_similar_borrows: List[Tuple[Unpack[TOOL], int]]) -> None:
     if tools_similar_borrows:
         print(
             f'Tools also borrowed ({len(tools_similar_borrows)}) [similarity descending]:')
@@ -117,7 +117,7 @@ show tool
 """
 
 
-def show_tool(cur: cursor, username: str, tool: Tool, show_categs: bool = True, tab: bool = False) -> None:
+def show_tool(cur: cursor, username: str, tool: TOOL, show_categs: bool = True, tab: bool = False) -> None:
     try:
         barcode, name, description, purchase_date, purchase_price, shareable, tool_username = tool
 

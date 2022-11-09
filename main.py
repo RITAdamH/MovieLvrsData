@@ -11,23 +11,12 @@ from psycopg2 import connect
 from sshtunnel import SSHTunnelForwarder
 
 from categories import add_categ_tool, create_categ, delete_categ, delete_categ_tool, edit_categ_name, show_categs
-from constants import HELP_STR
+from constants import COMMAND_FLAGS, DB_NAME, HELP_STR
 from login import create_user, login_user
 from requests import accept_req, create_req, delete_req, reject_req, show_reqs_given, show_reqs_received
 from search import search_tools_barcode, search_tools_name_categ
 from stats import show_dashboard, show_most_borrowed, show_most_lent
 from tools import add_tool, edit_tool, remove_tool, return_tool, show_also_borrowed, show_tools_available, show_tools_borrowed, show_tools_lent, show_tools_owned
-
-COMMAND_FLAGS = {
-    'help': (),
-    'quit': (),
-    'tool': ('v', 'a', 'e', 'd', 'r', 's'),
-    'categ': ('v', 'c', 'e', 'd'),
-    'req': ('g', 'r'),
-    'stat': ('d', 'l', 'b')
-}
-
-DB_NAME = 'p32001_17'
 
 
 """
