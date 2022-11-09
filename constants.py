@@ -10,7 +10,9 @@ COMMAND_FLAGS = {
     'req': ('g', 'r'),
     'stat': ('d', 'l', 'b')
 }
+
 DB_NAME = 'p32001_17'
+
 HELP_STR = """Commands:
 help                -  displays this menu
 quit                -  exits the program
