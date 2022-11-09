@@ -27,12 +27,12 @@ main engine for the program
 
 def main() -> None:
     config = ConfigParser()
-    config.read('ssh.ini')
+    config.read('ssh.cfg')
     if config.has_option('ssh', 'username') and config.has_option('ssh', 'password'):
         ssh_username = config['ssh']['username']
         ssh_password = config['ssh']['password']
     else:
-        print('No valid ssh.ini found, please enter credentials')
+        print('No valid ssh.cfg found, please enter credentials')
         ssh_username = input('SSH username: ')
         ssh_password = input('SSH password: ')
 
