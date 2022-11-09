@@ -9,7 +9,9 @@ Description: Implementation for a Python interface so that users may interact wi
 from configparser import ConfigParser
 from psycopg2 import connect
 from sshtunnel import SSHTunnelForwarder
+
 from categories import add_categ_tool, create_categ, delete_categ, delete_categ_tool, edit_categ_name, show_categs
+from constants import HELP_STR
 from login import create_user, login_user
 from requests import accept_req, create_req, delete_req, reject_req, show_reqs_given, show_reqs_received
 from search import search_tools_barcode, search_tools_name_categ
@@ -104,17 +106,7 @@ def main() -> None:
             elif len(flags) > 1 or bool(flags) != bool(COMMAND_FLAGS[command]) or flags and flags[0] not in COMMAND_FLAGS[command]:
                 print('Invalid usage - see "help"')
             elif command == 'help':
-                print('Commands:')
-                print('help                -  displays this menu')
-                print('quit                -  exits the program')
-                print(
-                    'tool [v a e d r s]  -  manage your tools [view add edit delete return search]')
-                print(
-                    'categ [v c e d]     -  manage your categories [view create edit delete]')
-                print(
-                    'req [g r]           -  manage your borrow requests [given received]')
-                print(
-                    'stat [d l b]       -  show statistics [dashboard lent borrowed]')
+                print(HELP_STR)
             elif command == 'quit':
                 break
             elif command == 'tool':
