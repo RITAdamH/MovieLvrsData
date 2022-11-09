@@ -33,7 +33,7 @@ def show_dashboard(cur: cursor, username: str) -> bool:
 def show_most_borrowed(cur: cursor, username: str) -> bool:
     try:
         cur.execute(
-            f"select tools.*, sum(coalesce(date_returned, current_date) - last_status_change + 1) as days_borrwed from tools, tool_reqs where tools.barcode = tool_reqs.barcode and tool_reqs.username = '{username}' and tool_reqs.status = 'Accepted' group by tools.barcode order by days_borrwed desc, name, barcode limit 10")
+            f"select tools.*, sum(coalesce(date_returned, current_date) - last_status_change + 1) as days_borrowed from tools, tool_reqs where tools.barcode = tool_reqs.barcode and tool_reqs.username = '{username}' and tool_reqs.status = 'Accepted' group by tools.barcode order by days_borrowed desc, name, barcode limit 10")
 
         tools_borrowed_stats = cur.fetchall()
 
