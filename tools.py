@@ -96,6 +96,15 @@ def return_tool(cur: cursor, username: str, barcode: str) -> Optional[bool]:
     return cur.rowcount > 0
 
 
+def show_also_borrowed(cur: cursor, username: str, tools_similar_borrows: Tuple[str, str, Optional[str], Optional[date], Optional[Decimal], bool, Optional[str], int]) -> None:
+    if tools_similar_borrows:
+        print(
+            f'Tools also borrowed ({len(tools_similar_borrows)}) [similarity descending]:')
+        for tool_similar_borrows in tools_similar_borrows:
+            *tool, _ = tool_similar_borrows
+            show_tool(cur, username, tool)
+
+
 """
 show tool
 @param cur: the cursor to the database

@@ -8,7 +8,7 @@ Description: File containing any functions that query the database to request to
 from datetime import date, datetime, timedelta
 from psycopg2.errors import IntegrityError
 from psycopg2.extensions import cursor
-from typing import Optional, Tuple
+from typing import List, Optional, Tuple
 
 
 """
@@ -41,23 +41,28 @@ create tool request
 @param username: the users username
 @param date_returned: the date the tool was returned
 @param duration: the duration of the tool
-@return True if execution successful, False if integrity error (user error), None if other error
+@return a tuple with True if execution successful, False if integrity error (user error), None if other error and an optional list of tools with similar borrows
 """
 
 
-def create_req(cur: cursor, username: str, barcode: str, date_required: str, duration: str) -> Optional[bool]:
+def create_req(cur: cursor, username: str, barcode: str, date_required: str, duration: str) -> Tuple[Optional[bool], Optional[List[tuple]]]:
     try:
+        cur.execute(
+            f"select tools.*, count(*) as similar_borrows from tools, tool_reqs where tools.barcode = tool_reqs.barcode and tools.barcode != '{barcode}' and (tool_reqs.username, tool_reqs.request_date) in (select username, request_date from tool_reqs where barcode = '{barcode}') group by tools.barcode order by similar_borrows desc, name, barcode limit 3")
+
+        tools_similar_borrows = cur.fetchall()
+
         cur.execute(
             f"insert into tool_reqs (username, barcode, date_required, duration) values ('{username}', (select "
             f"barcode from tools where barcode = '{barcode}' and shareable and username != '{username}' and username "
             f"is not null and barcode in (select barcode from tool_reqs where status != 'Accepted' or "
             f"date_returned is not null)), '{date_required}', '{duration}')")
     except IntegrityError:
-        return False
+        return False, None
     except:
-        return None
+        return None, None
 
-    return True
+    return True, tools_similar_borrows
 
 
 """

@@ -14,7 +14,7 @@ from login import create_user, login_user
 from requests import accept_req, create_req, delete_req, reject_req, show_reqs_given, show_reqs_received
 from search import search_tools_barcode, search_tools_name_categ
 from stats import show_dashboard, show_most_borrowed, show_most_lent
-from tools import add_tool, edit_tool, remove_tool, return_tool, show_tools_available, show_tools_borrowed, show_tools_lent, show_tools_owned
+from tools import add_tool, edit_tool, remove_tool, return_tool, show_also_borrowed, show_tools_available, show_tools_borrowed, show_tools_lent, show_tools_owned
 
 COMMAND_FLAGS = {
     'help': (),
@@ -275,12 +275,15 @@ def main() -> None:
                         barcode = input('Tool barcode: ')
                         date_required = input('Date tools is required: ')
                         duration = input('Duration: ')
-                        res = create_req(cur, username, barcode,
-                                         date_required, duration)
+                        res, tools_similar_borrows = create_req(cur, username, barcode,
+                                                                date_required, duration)
                         if res is None:
                             print('Error creating request')
                         elif res:
                             print('Request created successfully')
+
+                            show_also_borrowed(
+                                cur, username, tools_similar_borrows)
                         else:
                             print(
                                 'Tool does not exist or is owned by you or is not owned or is not shareable or is '
