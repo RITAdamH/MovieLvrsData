@@ -5,7 +5,7 @@ from tools import show_tool
 
 def show_dashboard(cur: cursor, username: str) -> bool:
     try:
-        print('Your dashboard')
+        print('Your dashboard:')
         print('-' * 50)
 
         cur.execute(
@@ -16,12 +16,12 @@ def show_dashboard(cur: cursor, username: str) -> bool:
         cur.execute(
             f"select tools.* from tools, tool_reqs where tools.barcode = tool_reqs.barcode and tools.username = '{username}' and tool_reqs.status = 'Accepted' and tool_reqs.date_returned is null")
 
-        print(f'Tools lent: {cur.rowcount}')
+        print(f'Tools currently lent: {cur.rowcount}')
 
         cur.execute(
             f"select tools.* from tools, tool_reqs where tools.barcode = tool_reqs.barcode and tool_reqs.username = '{username}' and tool_reqs.status = 'Accepted' and tool_reqs.date_returned is null")
 
-        print(f'Tools borrowed: {cur.rowcount}')
+        print(f'Tools currently borrowed: {cur.rowcount}')
 
         print('-' * 50)
     except:
