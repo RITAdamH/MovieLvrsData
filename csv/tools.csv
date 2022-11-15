@@ -1,0 +1,284 @@
+barcode,name,description,purchase_date,purchase_price,shareable,username
+123456789873,Wrench,Wrenches things,2022-10-20,0.05,true,rypat1
+570001739943,COMBINATION RUBBER MALLET 16OZ,"Hammer, Dead Blow Fiberglass, Cushioned Grip",2021-06-03,15.99,true,bpl9915
+444065967916,RIP HAMMER 20OZ,"Hammer, Claw",2020-10-30,28.99,true,bpl9915
+652207625294,HICKORY HAMMER WITH SHAFT 22OZ,"Hammer, Non-Sparking",2017-04-08,37.99,true,bpl9915
+549641108328,BRICK HAMMER 24OZ,"Hammer, Riveting",2018-04-18,39.99,true,bpl9915
+880164660886,STANLEY FIBERGLASS RIP CLAW HAMMER,"Hammer, Claw",2019-09-04,42.24,true,bpl9915
+222994289655,"8-LB SLEDGE HAMMER, 36-IN FIBERGLASS","Hammer, Sledge, Fiberglass",2018-08-17,43.94,true,bpl9915
+287354123350,COMPO-CAST STANDARD SOFT-FACE HAMMER,"Hammer, Dead Blow",2022-06-28,68.99,true,bpl9915
+573248289760,HAMMERS DEAD BLOW STEEL TUBE 3PC,"Hammer, Dead Blow Set Steel Tube, Cushioned Grip Medium-Hard, 30mm, 40mm, 50mm Dia",2017-03-06,144.74,true,bpl9915
+391761829977,"STRAIGHT CLAW HAMMER 16 OZ 13""","Hammer, Claw Fiberglass, Cushioned Grip",2021-04-07,34.96,true,bpl9915
+238235034563,"STRAIGHT CLAW HAMMER 18 OZ 15""","Hammer, Claw Fiberglass, Cushioned Grip",2016-06-11,34.96,true,bpl9915
+491966396062,"BALL-PEEN HAMMER 32 OZ 15""","Hammer, Ball Peen, Fiberglass, Cushioned Grip",2017-01-11,41.98,true,bpl9915
+325631795810,"STRAIGHT CLAW HAMMER 20 OZ 14""","Hammer, Claw, Fiberglass, Cushioned Grip",2022-08-17,41.98,true,bpl9915
+822780939935,LINEMAN'S CLAW MILLED HAMMER,"Hammer, Claw, Fiberglass, Textured Grip",2021-08-04,74.12,true,bpl9915
+553770042000,HAMMER SLEDGE FIBRGLSS CUSH GRIP,"Hammer, Sledge, Fiberglass, Cushioned Grip",2019-03-10,284.62,true,bpl9915
+915812666574,Soft Head Hammer with Genuine Wood Handle,"Mallet, Split Head Wood Soft",2019-07-28,18.99,true,bpl9915
+882636651151,HICKORY HANDLE NAILING HAMMER CU,"Hammer, Claw Wood, Hickory",2019-07-25,21.47,true,bpl9915
+385486419189,"16 OZ. 13-1/2"" OAL RUBBER MALLET","Mallet, Split Head Wood",2019-11-03,22.31,true,bpl9915
+623328093605,FATMAX JACKETED GRAPHITE HAMMER,"Hammer, Ball Peen",2022-10-14,31.50,true,bpl9915
+841382811886,HICKORY HANDLE BALL PEIN HAMMER,"Hammer, Ball Peen Wood, Hickory",2021-05-06,36.45,true,bpl9915
+903924747359,"12""L HAMMER W/OAK HANDLE & INTER","Mallet, Split Head Wood, Oak Soft",2016-02-02,37.65,true,bpl9915
+893472309713,FRAMING HAMMER 28OZ MILLED FACE,"Hammer, Claw",2021-12-13,39.99,true,bpl9915
+525206749103,DEAD BLOW COMPO-CAST COMBO FACE,"Hammer, Dead Blow",2019-06-04,40.52,true,bpl9915
+792287743509,COMPO-CAST STANDARD SOFT-FACE HA,"Hammer, Dead Blow, Soft",2018-05-10,44.06,true,bpl9915
+442211003630,HICKORY HANDLE SLEDGE HAMMER,"Hammer, Sledge Wood, Hickory",2018-04-24,46.40,true,bpl9915
+135586650766,"ONE-PIECE STEEL HAMMER, 20 OZ.","Hammer, Claw",2018-05-11,47.27,true,bpl9915
+379771114924,STANLEY FATMAX JACKETED GRAPHITE HAMMER,"Hammer, Claw",2020-12-28,53.13,true,bpl9915
+639375825338,FATMAX ANTIVIBE SMOOTH FRAMING HAMMER,"Hammer, Claw Steel, Cushioned Grip",2018-10-09,57.34,true,bpl9915
+854587334582,"4-LB HAND DRILL HAMMER, 10.5"" HANDLE","Hammer, Hand Drilling Wood, Hickory",2020-11-10,62.00,true,bpl9915
+491006934642,"2.5LB BRASS SLEDGE, ERGO, SG","Hammer, Sledge Fiberglass, Cushioned Grip",2017-01-08,69.45,true,bpl9915
+152197807857,JACKETED FIBERGLASS ENGINEERING HAMMER,"Hammer, Sledge Fiberglass",2021-02-22,74.96,true,bpl9915
+634983859660,"2.5LB BRASS SLEDGE, CLASSIC, SG","Hammer, Sledge Fiberglass, Cushioned Grip",2021-01-16,75.10,true,bpl9915
+135323540544,"B.A.S.H. SLEDGE HAMMER, 12"" HEAD","Hammer, Sledge",2016-02-21,87.74,true,bpl9915
+871485669228,48-in Steel Digging Shovel,Maker: Craftsman,2021-03-22,31.54,true,bpl9915
+431433047255,20-in Wood Transfer Shovel,Maker: Craftsman,2016-07-31,19.98,true,bpl9915
+575723358070,One Shot Shovel 43-in Digging Shovel,Maker: Craftsman,2018-08-01,18.25,true,bpl9915
+837239603191,Root Slayer 32.4-in Composite Digging Shovel,Maker: Craftsman,2022-04-20,49.38,false,bpl9915
+928553427602,47 in. Fiberglass Handle Transfer Shovel with Comfort Step,Maker: Craftsman,2016-02-14,21.53,false,bpl9915
+373706684301,48 in. Wood Handle Round Point Shovel,Maker: Craftsman,2019-02-23,51.86,false,bpl9915
+565041910165,47.5 in. Wood Handle Trenching Shovel,Maker: Craftsman,2022-01-26,11.66,false,bpl9915
+593396634768,23.5 in. Wood D-Handle Square Point Shovel,Maker: Craftsman,2021-03-18,19.13,false,Josb938
+807647130428,16 oz. Fiberglass Claw Hammer,Maker: Craftsman,2020-06-08,35.40,false,Josb938
+416667410885,10 oz. Hammer with 9-3/4 in. Wood Handle,Maker: Craftsman,2019-08-17,24.27,false,Josb938
+184433904469,22 oz. Steel Checkered Face Hammer,Maker: Craftsman Professional,2019-07-18,28.95,false,Josb938
+840435798611,22 oz. Milled Face Framing Hammer,Maker: Craftsman Professional,2016-10-13,37.02,false,Josb938
+319570824832,16 oz. Rubber Mallet,Maker: Craftsman Professional,2020-11-20,51.38,false,Josb938
+214036354779,16 oz. White Rubber Tile Tapping Mallet,Maker: Craftsman Professional,2017-01-12,40.31,false,Josb938
+798916574951,16 oz. Fiberglass Handle White/Black Rubber Mallet,Maker: Craftsman Professional,2021-04-13,33.72,false,Josb938
+128248698557,2 lb. Hard Rubber Mallet,Maker: Craftsman Professional,2018-07-29,13.82,false,Josb938
+863645507096,3 lbs. Deadblow Mallet,Maker: Craftsman Professional,2017-12-06,18.06,false,Josb938
+123456789875,Saw,Saws things,2022-10-17,102.00,true,
+123456789876,Hammer,Hammers things,2022-10-18,12.10,false,
+123456789874,Mallet,Mallets things,2022-10-11,10.00,true,8con
+642039897514,1/8-in X 4-in Slotted Screwdriver,Maker: Craftsman Professional,2018-09-11,39.45,true,8con
+175435795103,#0 X 2.5-in Phillips Head Screwdriver,Maker: Huskey,2017-03-08,50.12,true,8con
+204067281627,1/8-in X 2.5-in Slotted Screwdriver,Maker: Craftsman Professional,2020-08-30,51.62,true,8con
+934549704930,"1/4"" End Wrench",Maker: Stanley,2019-02-21,54.59,true,rypat1
+775593781243,"5/16"" End Wrench",Maker: Stanley,2018-09-21,44.65,true,rypat1
+779811431913,"3/8"" End Wrench",Maker: Stanley,2019-01-23,26.13,true,rypat1
+393468392069,"7/16"" End Wrench",Maker: Stanley,2019-12-31,24.84,true,rypat1
+553550220225,"1/2"" End Wrench",Maker: Stanley,2021-09-18,7.55,true,rypat1
+334888228991,"9/16"" End Wrench",Maker: Stanley,2020-07-05,24.77,true,rypat1
+508452656937,"5/8"" End Wrench",Maker: Stanley,2018-04-29,22.72,true,rypat1
+655117154490,"11/16"" End Wrench",Maker: Stanley,2022-03-31,42.85,true,rypat1
+271882658261,"3/4"" End Wrench",Maker: Stanley,2019-05-05,46.11,true,rypat1
+550664547091,"13/16"" End Wrench",Maker: Stanley,2018-05-29,36.91,true,rypat1
+482272332845,8mm End Wrench,Maker: Stanley,2016-04-16,5.45,true,rypat1
+189879823261,9mm End Wrench,Maker: Stanley,2019-02-15,28.42,true,rypat1
+705090220194,10mm End Wrench,Maker: Stanley,2019-04-14,27.94,true,rypat1
+197812869058,11mm End Wrench,Maker: Stanley,2022-06-01,25.95,true,rypat1
+951367911115,12mm End Wrench,Maker: Stanley,2019-05-28,49.60,true,rypat1
+284992310125,13mm End Wrench,Maker: Kobalt,2021-06-01,53.54,true,rypat1
+145920665904,14mm End Wrench,Maker: Kobalt,2019-03-03,38.04,true,rypat1
+847940681374,15mm End Wrench,Maker: Kobalt,2021-08-19,57.67,true,rypat1
+877328503751,17mm End Wrench,Maker: Kobalt,2019-03-06,37.89,true,rypat1
+440345830597,18mm End Wrench,Maker: Kobalt,2021-06-23,12.43,true,rypat1
+677082218670,"3/8"" Stubby End Wrench",Maker: Kobalt,2020-06-26,30.56,true,rypat1
+626280614975,"7/16"" Stubby End Wrench",Maker: Kobalt,2020-11-10,43.97,true,rypat1
+260959887735,"1/2"" Stubby End Wrench",Maker: Kobalt,2021-06-19,10.54,true,rypat1
+374914555377,"9/16"" Stubby End Wrench",Maker: Kobalt,2017-07-14,35.13,true,rypat1
+251783374220,"5/8"" Stubby End Wrench",Maker: Kobalt,2017-01-01,57.99,true,rypat1
+316763608433,"3/4"" Stubby End Wrench",Maker: Craftsman,2017-01-23,56.46,true,rypat1
+497776914758,10mm Stubby End Wrench,Maker: Craftsman,2017-11-25,14.82,true,rypat1
+519119496021,11mm Stubby End Wrench,Maker: Craftsman,2020-11-08,20.57,true,rypat1
+190015287666,12mm Stubby End Wrench,Maker: Craftsman,2020-03-07,57.25,true,rypat1
+465935958163,13mm Stubby End Wrench,Maker: Craftsman,2022-08-28,8.71,true,rypat1
+484864446270,14mm Stubby End Wrench,Maker: Craftsman,2022-10-16,19.66,true,rypat1
+253238529582,15mm Stubby End Wrench,Maker: Craftsman,2022-09-15,47.12,true,rypat1
+841237452986,2mm Allen Key,Maker: Craftsman,2018-07-12,38.07,true,rypat1
+731916570058,2.5mm Allen Key,Maker: Craftsman,2016-10-23,60.39,true,rypat1
+716239018067,3mm Allen Key,Maker: Craftsman,2020-04-12,59.83,true,rypat1
+571490877457,4mm Allen Key,Maker: Craftsman,2018-04-18,1.58,true,rypat1
+791020716930,5mm Allen Key,Maker: Kobalt,2017-11-19,48.91,true,rypat1
+429755533419,7mm Allen Key,Maker: Kobalt,2020-04-25,36.93,true,rypat1
+547652915119,8mm Allen Key,Maker: Kobalt,2018-07-04,16.94,true,rypat1
+133922026342,10mm Allen Key,Maker: Craftsman,2018-10-10,38.96,true,rypat1
+539032707898,12mm Allen Key,Maker: Craftsman,2018-07-25,3.15,true,rypat1
+244429370979,1.5mm Allen Key,Maker: ChannelLock,2016-09-30,35.26,true,rypat1
+741724228002,1/16in Allen Key,Maker: ChannelLock,2019-02-19,24.44,true,rypat1
+280032246370,5/64in Allen Key,Maker: Craftsman,2018-08-15,56.29,true,rypat1
+140254322392,3/32in Allen Key,Maker: Craftsman,2017-01-09,14.36,true,rypat1
+853813728967,1/8in Allen Key,Maker: Craftsman,2019-09-26,9.12,true,rypat1
+457460190605,5/32in Allen Key,Maker: Craftsman,2019-11-10,57.81,true,rypat1
+974055736078,3/16in Allen Key,Maker: Craftsman,2016-05-09,0.03,true,rypat1
+974277476234,7/32in Allen Key,Maker: Craftsman,2017-10-23,60.28,true,rypat1
+838159382447,1/4in Allen Key,Maker: Southwire,2019-12-28,39.28,true,rypat1
+269915092657,5/16in Allen Key,Maker: Southwire,2016-08-13,59.53,true,rypat1
+357285961440,25-key Metric/SAE Folding Hex Key Set,Maker: Southwire,2020-06-20,18.53,true,rypat1
+426674157558,22-Piece 72-Teeth 1/2-in Drive Quick-Release Standard Ratchet Set,Maker: Kobalt,2020-04-02,27.60,true,rypat1
+804027614913,6in Slip Joint Pliers,Maker: Craftsman,2019-02-14,3.75,true,rypat1
+624114879240,8in Slip Joint Pliers,Maker: Craftsman,2022-05-17,59.85,true,rypat1
+245902282991,6in Needle Nose Pliers,Maker: Kobalt,2016-03-28,53.27,true,rypat1
+650003109051,8in Needle Nose Pliers,Maker: Marshaltown,2016-10-28,18.05,true,rypat1
+907136392752,6.5in Channellock Pliers,Maker: Kobalt,2018-07-06,37.05,true,rypat1
+315303730021,10in Channellock Pliers,Maker: Craftsman,2021-07-23,27.35,true,rypat1
+396682310861,Lineman Pliers,Maker: Craftsman,2021-09-01,27.70,true,rypat1
+868226057814,Lineman Pliers with Wire Cutters,Maker: Kobalt,2016-02-07,40.54,false,rypat1
+245534971821,10in Locking Pliers,Maker: Kobalt,2019-05-10,19.20,false,rypat1
+978688895334,7in Locking Pliers,Maker: Kobalt,2022-01-22,26.74,false,rypat1
+938136344094,1/4-in X 1.5-in Slotted Screwdriver,Maker: Stanley,2021-09-03,41.20,true,8con
+182947899381,6mm Allen Key,Maker: Craftsman,2017-09-11,7.38,true,rypat1
+963764174445,8in Electrical Long Nose Pliers with Wire Cutters,Maker: Cobra,2022-09-29,41.81,false,rypat1
+349033933715,Welding Pliers,Maker: Cobra,2018-04-09,0.48,false,rypat1
+733093949052,Electrical Pliers,Maker: Southwire,2019-03-12,16.54,false,rypat1
+494012530626,6in Hack Saw,Maker: Southwire,2019-09-15,46.87,false,rypat1
+373565712016,Keyhole Saw,Maker: Southwire,2021-07-20,53.41,false,rypat1
+660312160738,12in Hack Saw,Maker: Black and Decker,2018-01-08,35.83,false,rypat1
+881438406615,10in Extra Fine Hack Saw,Maker: Dewalt,2019-06-21,4.85,false,rypat1
+381118175320,20in Hand Saw,Maker: Dewalt,2017-06-24,32.65,false,rypat1
+157025592430,15in Hand Saw,Maker: Bosch,2017-07-01,35.97,false,rypat1
+302106771182,14in Miter Box,Maker: Craftsman,2019-04-30,57.07,false,rypat1
+762683599660,12in Finish Cut Hand Saw,Maker: Makita,2017-07-08,14.59,false,rypat1
+531617501685,Utility Knife,Maker: Bosch,2021-03-20,54.37,false,Atom
+617316354529,Folding Utility Knife,Maker: Bosch,2020-03-07,32.94,false,Atom
+208945433891,8in Diagonal Cutters,Maker: Dewalt,2017-03-15,11.45,false,Atom
+625976818128,24in Bolt Cutters,Maker: Dewalt,2019-08-16,12.03,false,Atom
+455492842277,42in Bolt Cutters,Maker: Dewalt,2019-08-16,41.12,false,Atom
+518481866230,Siphone Pump,Maker: Fluke,2020-04-27,42.48,true,Atom
+914115654890,1/4-in x 25-ft Music Wire Drain Auger,Maker: Fluke,2016-11-06,38.32,true,Atom
+861885417814,3/8-in x 3-ft Music Wire Toilet Auger,Maker: Fluke,2017-12-14,18.57,true,Atom
+286850716405,50-ft Steel Fish Tape,Maker: Fluke,2017-12-14,57.54,true,Atom
+519005201580,25-ft Steel Fish Tape,Maker: Fluke,2021-08-12,24.69,true,Atom
+872862467012,75-ft Polymer Fish Tape,Maker: Fluke,2020-09-28,43.55,true,Atom
+855002908137,20v Coldless Drill,Maker: Fluke,2017-03-23,10.32,true,Atom
+179517379140,1/2 Keyed Corded Drill,Maker: Fluke,2020-07-18,34.64,true,Atom
+671095129633,1/2-in 20-Volt Max Variable Speed Brushless Cordless Hammer Drill,Maker: Fluke,2018-06-14,34.92,true,Atom
+847750682654,Drum Sander,Maker: Bosch,2016-11-19,24.73,true,Atom
+199820752845,12in Sliding Compound Miter Saw,Maker: Porter Cable,2022-01-06,59.50,true,Atom
+906374229316,Reciprocating Saw,Maker: Dewalt,2021-10-29,52.65,true,Atom
+214836040566,18v Cordless Reciprocating Saw,Maker: Dewalt,2021-11-22,35.97,true,Atom
+104310459514,6.5amp Jigsaw,Maker: ShopVac,2020-11-14,46.77,true,Atom
+976077692816,10in Portable Table Saw,Maker: Craftsman,2021-07-24,35.94,true,Atom
+618283896632,Adjutable Saw Horses,Maker: Craftsman,2018-06-12,59.08,true,Atom
+899885611502,Multimeter,Maker: GREBSTK,2018-10-30,38.25,true,Atom
+998692839357,Pick-Axe,Maker: GREBSTK,2018-01-02,0.15,true,Atom
+353769462099,Trowel,Maker: GREBSTK,2017-07-20,8.58,true,Atom
+987447224331,Wood Handle Garden Hoe,Maker: GREBSTK,2020-04-04,34.36,true,Atom
+937146171980,Garden Edger,Maker: Craftsman,2020-06-03,32.54,true,Atom
+461417351982,Pitchfork,Maker: Crescent Lufkin,2020-07-20,2.26,true,Atom
+826628655953,20lb Sledge Hammer,Maker: Irwin,2017-10-06,27.83,true,Atom
+603608296058,Plastic Wheel Barrow,Maker: Irwin,2017-03-19,30.15,true,Atom
+406473810244,Steel Wheel Barrow,Maker: Irwin,2022-03-07,46.77,true,Atom
+207259597134,Trouble light,Maker: Empire,2018-01-23,12.14,true,Atom
+830925063364,Laser Level,Maker: Nicholson,2017-09-07,6.75,true,Atom
+235883180378,Pancake Compressor,Maker: Nicholson,2019-01-06,21.92,true,Atom
+984206192346,18-Gauge Pneumatic Corded Brad Nailer,Maker: Nicholson,2022-05-26,55.71,true,Atom
+594020526320,Pneumatic 21-Degree Collated Framing Nailer,Maker: Nicholson,2018-08-03,52.50,true,Atom
+830520384904,6gal Wet/Dry Shop Vac,Maker: Nicholson,2017-07-02,3.87,true,Atom
+353729528725,12gal Wet/Dry Shop Vac,Maker: Nicholson,2020-09-03,28.16,true,Atom
+822632947031,3200PSI Pressure Washer,Maker: Nicholson,2017-12-23,7.50,true,Atom
+437499556842,"1/4"" Wood Chisel",Maker: Nicholson,2022-08-30,26.53,true,Atom
+759261844573,"1/2"" Wood Chisel",Maker: Nicholson,2022-01-05,13.27,true,Atom
+555019594560,"3/4"" Wood Chisel",Maker: Nicholson,2017-06-24,47.49,true,Atom
+934501355417,"1"" Wood Chisel",Maker: Nicholson,2019-12-05,60.02,true,Atom
+866964896425,25' Tape Measure,Maker: Nicholson,2016-08-14,42.22,true,Atom
+540070524897,200' Tape Measure,Maker: Nicholson,2022-01-22,30.63,true,Atom
+144903915640,"48"" Beam Level",Maker: Nicholson,2017-09-03,35.19,true,Atom
+219656266696,"72"" Beam Level",Maker: Nicholson,2021-01-12,37.51,true,Atom
+708161278438,"24"" Beam Level",Maker: Nicholson,2018-09-07,53.29,true,Atom
+827579718519,"9"" Torpedo Level",Maker: Nicholson,2020-11-28,54.04,true,Atom
+530235489518,"6"" File",Maker: Nicholson,2021-09-09,36.82,true,Atom
+906424793792,"8"" File",Maker: Nicholson,2019-11-06,25.90,true,Atom
+346460649602,"10"" File",Maker: Nicholson,2021-08-23,3.95,true,Atom
+453579122759,WORK LIGHT 1000LM LED RECHARGE,Maker: Southwire,2017-12-17,34.99,true,Atom
+981424104385,CLAMP LIGHT 1700LM LED RECHARGE,Maker: Southwire,2020-04-16,49.99,true,Atom
+987181428336,"KIT, 250 LUMENS LED HEAD LAMP",Maker: Southwire,2021-03-12,65.99,true,Atom
+817527352831,2000LM RECHRG LED AREA LITE KIT,Maker: Southwire,2016-01-07,129.99,true,Atom
+179081706121,6000LM RECHRG LED AREA LITE KIT,Maker: Southwire,2017-11-29,261.99,true,Atom
+452760223562,10000LM CORDED LED LIGHT KIT,Maker: Southwire,2018-09-18,314.98,true,Atom
+409758731289,FUEZR-2 ULTRA-BRIGHT WORKLIGHT/F,Maker: Triplett,2020-10-29,9.99,true,Atom
+764578009253,51 LED UV BLACKLIGHT FLASHLIGHT,Maker: ECG,2020-07-21,12.96,true,Atom
+129742785993,"ECLIPSE LED FLASHLIGHT, GREEN",Maker: Eclipse,2021-08-17,18.05,true,Atom
+405323730630,"10 LED HEADLAMP, RED/BLACK",Maker: Go Green Power,2021-12-16,20.66,true,Atom
+220341024961,RECHARGEABLE FLASHLIGHT,Maker: Go Green Power,2020-12-04,21.34,true,Atom
+386560881616,CLAMP LIGHT W/ALUMINUM REFLECTOR,Maker: Bayco,2019-11-21,26.82,true,Atom
+696306954847,"SAFETY-APPROVED LED FLASHLIGHT,",Maker: NightStick,2022-04-18,51.71,true,Atom
+383576386976,INTRINSICALLY SAFE MAGNETIC DUAL FLASHLIGHT,Maker: NightStick,2022-09-04,59.13,true,Atom
+569915702517,SAFETY RATED/INTRINSICALLY SAFE HEADLIGHT,Maker: NightStick,2020-03-07,65.97,true,Atom
+710551524299,2.5-Amp Random Orbital Sander with Bag,Maker: Fluke,2020-02-20,6000.19,true,Atom
+967335898732,PORTABLE DUAL LED WORKLIGHT FLOO,Maker: Global Industrial,2016-04-15,89.83,true,Atom
+752424423610,PENLIGHT LED 35LM AAA(2),Maker: Energizer,2020-03-26,7.80,true,Atom
+997294650401,FLASHLIGHT LED 20LM AA(2),Maker: Energizer,2022-05-28,18.36,true,Atom
+281010885073,FLASHLIGHT LED 400LM 2AA,Maker: Energizer,2017-01-18,21.40,true,Atom
+543066876234,FLASHLIGHT LED 300 LUMEN AA(2),Maker: Energizer,2018-05-03,22.63,true,Atom
+556285507869,WORK LIGHT LED 550LM AA(4),Maker: Energizer,2018-08-25,22.70,true,Atom
+102954970345,FLASHLIGHT LED 1300LM 6AA,Maker: Energizer,2019-08-30,26.77,true,Atom
+880413787276,ENR VISION ULTRA RECHARGEABLE HE,Maker: Energizer,2022-05-05,31.79,true,Atom
+480682997310,"ENERGIZER PERFORMANCE METAL 1,50",Maker: Energizer,2018-10-26,35.33,true,Atom
+547550404493,ENERGIZER LED RECHARGEABLE PANEL,Maker: Energizer,2018-09-13,39.78,true,Atom
+704584593872,RECHARGEABLE HARD HAT HEADLAMP/W,Maker: Klien Tools,2022-04-20,42.00,true,8con
+375187241137,RECHARGEABLE WATERPROOF LED POCK,Maker: Klien Tools,2019-05-26,42.00,true,8con
+510715286958,RECHARGEABLE 400 LUMEN HEADLAMP,Maker: Klien Tools,2016-06-03,56.00,true,8con
+189688560674,RECHARGEABLE FOCUS FLASHLIGHT WI,Maker: Klien Tools,2020-08-22,56.80,true,8con
+400547736590,RECHARGEABLE LED FLASHLIGHT WITH,Maker: Klien Tools,2021-11-23,59.64,true,8con
+851680670528,RECHARG PERSONAL WORKLIGHT,Maker: Klien Tools,2021-04-29,60.97,true,8con
+455578343302,RECHARGEABLE 2-COLOR LED FLASHLIGHT,Maker: Klien Tools,2017-10-27,72.00,true,8con
+682119340402,CAP VISOR LIGHT,Maker: Klien Tools,2022-06-02,27.22,true,8con
+200747921683,ENR VISION RECHARGEABLE LANTERN,Maker: Energizer,2019-08-05,38.38,true,8con
+246421786139,ENR INTRINSICALLY SAFE 2AA FLASHLIGHT,Maker: Energizer,2020-04-02,16.07,true,8con
+736777144459,ENR INTRINSICALLY SAFE 2D FLASHLIGHT,Maker: Energizer,2018-08-11,23.09,true,8con
+625462229531,RAYOVAC VIRTUALLY INDESTRUCTIBLE,Maker: Energizer,2020-12-22,19.43,true,8con
+654169201136,ENERGIZER VISION LED USB LANTERN,Maker: Energizer,2017-04-26,33.66,true,8con
+135175480829,RAYOVAC VIRTUALLY INDESTRUCTIBLE,Maker: Energizer,2020-05-25,36.11,true,8con
+372756559154,ENERGIZER HANDHELD RECHARGEABLE,Maker: Energizer,2016-01-08,39.02,true,8con
+762505229155,ENERGIZER VISION HD RECHARGEABLE,Maker: Energizer,2017-02-05,47.55,true,8con
+546631065484,"TERMINAL CUTTER, SIDE FEED",Maker: TE Application Tooling,2016-10-16,223.18,false,8con
+918441040548,REPLCMT BLADE KNIFE FINE POINT,Maker: Apex Tool Group,2017-02-21,3.30,false,8con
+275613242667,KNIFE PRECISION WITH BLADE,Maker: Apex Tool Group,2019-07-16,3.80,false,8con
+635704309021,SCOTCH SCISSORS 8 INCH,Maker: 3M,2020-08-07,9.73,false,8con
+849267461715,SHEARS OFFSET HANDLE,Maker: Klien Tools,2021-04-27,11.20,false,8con
+621571734082,KNIFE SET 10 BLADES 2 HANDLES,Maker: Apex Tool Group,2018-05-30,15.90,false,8con
+861163599401,REPLACEMENT BLADE #11 5PC,Maker: Aven Tools,2021-02-14,3.56,false,8con
+243251480858,REPLACEMENT BLADE #11 SS 5 PC,Maker: Aven Tools,2020-07-14,4.21,false,8con
+436238392187,KNIFE PRECISION WITH #11 BLADE,Maker: Aven Tools,2021-12-14,8.20,true,
+839404786241,"MEDIQUE SCISSORS, 4 1/2"" WIRE, 1",Maker: Medi-First,2022-03-07,4.02,true,
+639677582584,"MEDIQUE SCISSORS, 4 1/2"" ANGLE K",Maker: Medi-First,2020-12-23,4.98,true,
+866357976004,"4"" SCRAPER REPLACEMENT BLADES 10",Maker: Ox Tools,2021-09-03,4.99,true,
+204703410243,MINI-RAZOR FIXED BLADE SCRAPER,Maker: Stanley,2016-01-25,7.25,true,
+986600829330,HEAVY DUTY KNIFE BLADES 10PK,Maker: Ox Tools,2018-11-12,7.99,true,
+129116530246,"SAFETY CUTTER, CERAMIC BLADE",Maker: Slice,2016-03-08,8.85,true,
+432515628679,18MM QUICK-POINT SNAP-OFF RETRAC,Maker: Stanley,2018-06-11,8.90,true,
+150383486749,"TAPING KNIFE BLUE STEEL 8""",Maker: Ox Tools,2018-05-14,8.99,true,
+122564020105,"TAPING KNIFE BLUE STEEL 10""",Maker: Ox Tools,2018-05-26,9.99,true,
+455130290460,"JOINT KNIFE SST 1-1/4""",Maker: Ox Tools,2018-05-09,9.99,true,
+437363011618,"JOINT KNIFE STAINLESS STEEL 2""",Maker: Ox Tools,2019-01-18,10.99,true,
+377754747262,"TAPING KNIFE BLUE STEEL 12""",Maker: Ox Tools,2018-10-12,10.99,true,
+488858477698,RAZOR BLADE SCRAPER W/5 BLADES,Maker: Stanley,2018-07-06,11.88,true,
+547541628694,"TAPING KNIFE BLUE STEEL 14""",Maker: Ox Tools,2020-01-19,11.99,true,
+755581327118,"TAPING KNIFE STAINLESS STEEL 8""",Maker: Ox Tools,2017-04-28,11.99,true,
+453007565159,"GEN PURPOSE 4"" DIAMOND BLADE",Maker: Ox Tools,2016-04-01,11.99,true,
+972808308968,"5"" REPLACEMENT SCRAPER BLADES",Maker: Ox Tools,2020-05-30,11.99,true,
+235501958218,"JOINT KNIFE STAINLESS STEEL 3""",Maker: Ox Tools,2021-02-21,11.99,true,
+448358750479,WOOD CUTTING 24 TOOTH SAW BLADE,Maker: Ox Tools,2018-11-15,11.99,true,
+338112123114,"JOINT KNIFE STAINLESS STEEL 4""",Maker: Ox Tools,2016-09-29,12.99,true,
+674027923166,"TAPING KNIFE STAINLESS STEEL 10""",Maker: Ox Tools,2019-10-23,12.99,true,
+697592718271,HOMEOWNER'S RETRACTABLE BLADE UT,Maker: Stanley,2019-09-22,13.08,true,
+968572107940,"JOINT KNIFE STAINLESS STEEL 5""",Maker: Ox Tools,2018-02-20,13.99,true,
+449056831084,"TAPING KNIFE STAINLESS STEEL 12""",Maker: Ox Tools,2020-04-14,13.99,true,
+759258573413,"CLASSIC 99 6"" RETRACTABLE BLADE",Maker: Stanley,2021-06-09,14.65,true,
+197834128475,"GEN PURPOSE 4.5"" DIAMOND BLADE",Maker: Ox Tools,2020-09-15,14.99,true,
+244867639338,3/16-in X 4-in Slotted Screwdriver,Maker: Craftsman Professional,2021-04-28,58.67,true,8con
+371217369829,1/4-in X 4-in Slotted Screwdriver,Maker: Stanley,2021-11-28,38.57,true,8con
+307126287558,"WRENCH OPEN END 5/16"" 5IN-LBS",Maker: Southwire,2017-05-27,187.86,true,
+303337880724,#2 X 4-in Phillips Head Screwdriver,Maker: Stanley,2022-07-18,10.94,true,8con
+525106084693,HOOKED KNIFE BLADES 10PK,Maker: Ox Tools,2018-04-29,8.99,true,Atom
+100879415439,3/8in Allen Key,Maker: Southwire,2018-11-20,17.00,false,bpl9915
+968383399800,1/4-in X 6-in Slotted Screwdriver,Maker: Huskey,2021-08-20,13.15,true,8con
+693096764408,#1 X 3-in Phillips Head Screwdriver,Maker: Stanley,2019-08-12,24.67,true,8con
+404677425284,3/16-in X 4-in Slotted Screwdriver,Maker: Stanley,2021-01-21,42.21,true,8con
+191818210278,#0 X 1.5-in Phillips Head Screwdriver,Maker: Stanley,2021-01-22,25.74,true,8con
+148731162556,#2 X 4-in Phillips Head Screwdriver,Maker: Stanley,2022-01-28,1.70,true,8con
+516823932067,#3 X 6-in Phillips Head Screwdriver,Maker: Stanley,2019-08-19,34.18,true,8con
+572533514795,#2 X 1.5-in Phillips Head Screwdriver,Maker: Stanley,2017-04-17,50.40,true,8con
+324776610549,#2 X 4-in Phillips Head Screwdriver,Maker: Stanley,2016-02-16,0.20,true,8con
+138758658753,#1 X 3-in Phillips Head Screwdriver,Maker: Stanley,2018-06-01,59.03,true,8con
+969095444669,#2 X 8-in Phillips Head Screwdriver,Maker: Stanley,2018-08-08,54.55,true,8con
+944470459473,1/8-in x 1.5-in Slotted Screwdriver,Maker: Stanley,2021-05-29,42.69,true,8con
+889926377402,5/16-in X 6-in Slotted Screwdriver,Maker: Stanley,2018-06-15,48.65,true,8con
+681706001599,#1 X 3-in Phillips Head Screwdriver,Maker: Stanley,2016-11-30,30.30,true,8con
+342074945909,3/16-in X 6-in Slotted Screwdriver,Maker: Huskey,2020-07-13,55.41,true,8con
+225284101025,1/4-in X 1.5-in Slotted Screwdriver,Maker: Stanley,2019-11-24,24.29,true,8con
+292292399257,#2 X 1.5-in Phillips Head Screwdriver,Maker: Stanley,2020-06-27,27.64,true,8con
+313720313733,1/4-in X 1.5-in Slotted Screwdriver,Maker: Huskey,2021-04-22,40.72,true,8con
