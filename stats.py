@@ -3,6 +3,14 @@ from psycopg2.extensions import cursor
 from tools import show_tool
 
 
+"""
+shows the user's dashboard
+@param cur: the cursor
+@param username: the username
+@return: True if successful, False otherwise
+"""
+
+
 def show_dashboard(cur: cursor, username: str) -> bool:
     try:
         print('Your dashboard:')
@@ -30,6 +38,14 @@ def show_dashboard(cur: cursor, username: str) -> bool:
     return True
 
 
+"""
+shows the user's most borrowed tools
+@param cur: the cursor
+@param username: the username
+@return: True if successful, False otherwise
+"""
+
+
 def show_most_borrowed(cur: cursor, username: str) -> bool:
     try:
         cur.execute(
@@ -51,6 +67,14 @@ def show_most_borrowed(cur: cursor, username: str) -> bool:
         return False
 
     return True
+
+
+"""
+shows the user's most lent tools
+@param cur: the cursor
+@param username: the username
+@return: True if successful, False otherwise
+"""
 
 
 def show_most_lent(cur: cursor, username: str) -> bool:
