@@ -30,7 +30,8 @@ def accept_req(cur: cursor, username: str, req_username: str, barcode: str, requ
             f"update tool_reqs set status = 'Accepted', last_status_change = current_date, expected_return_date = '{expected_return_date}' where username = '{req_username}' and barcode = '{barcode}' and request_date = '{request_date}' and status = 'Pending' and barcode in (select barcode from tools where username = '{username}' and shareable)")
     except IntegrityError:
         return False
-    except:
+    except Exception as e:
+        print(e)
         return None
 
     return cur.rowcount > 0

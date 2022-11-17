@@ -1,3 +1,10 @@
+"""
+file: stats.py
+author: Patrick Johnson, Brett Lubberts
+description: This file contains the functions for the stats menu
+"""
+
+
 from psycopg2.extensions import cursor
 
 from tools import show_tool
@@ -17,7 +24,7 @@ def show_dashboard(cur: cursor, username: str) -> bool:
         print('-' * 50)
 
         cur.execute(
-            f"select * from tools where username = '{username}' and barcode not in (select barcode from tool_reqs where status == 'Accepted' and date_returned is not null)")
+            f"select * from tools where username = '{username}' and barcode not in (select barcode from tool_reqs where status = 'Accepted' and date_returned is not null)")
 
         print(f'Tools available from catalog: {cur.rowcount}')
 
