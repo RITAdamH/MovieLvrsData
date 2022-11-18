@@ -104,7 +104,7 @@ def main() -> None:
                         'Show all owned, all borrowed, all lent, or all available tools? (o/b/l/a): ').lower().strip()
                     if inp == 'o':
                         by = input(
-                            'Sort by category or name? (c/n): ').lower().strip()
+                            'Sort by name or category? (n/c): ').lower().strip()
                         if by in ('c', 'n'):
                             ord = input(
                                 'Ascending or descending? (a/d): ').lower().strip()
